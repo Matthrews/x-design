@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Button } from 'x-design';
+import { Button } from '@Matthrews/x-design';
 
 const Demo = () => {
   const handleClick = (e: any) => {
