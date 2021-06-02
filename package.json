@@ -1,7 +1,17 @@
 {
-  "private": true,
-  "name": "x-design",
+  "title": "x-design",
+  "name": "@Matthrews/x-design",
   "version": "1.0.0",
+  "author": "matthrew",
+  "description": "An enterprise-class UI components generator based on React.",
+  "keywords": [
+    "x-design",
+    "components",
+    "UI",
+    "react",
+    "fronted"
+  ],
+  "license": "MIT",
   "scripts": {
     "start": "dumi dev",
     "docs:build": "dumi build",
@@ -29,7 +39,8 @@
   },
   "dependencies": {
     "classnames": "^2.3.1",
-    "react": "^16.12.0"
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   },
   "devDependencies": {
     "@umijs/test": "^3.0.5",
@@ -39,5 +50,12 @@
     "lint-staged": "^10.0.7",
     "prettier": "^2.2.1",
     "yorkie": "^2.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Matthrews/x-design/"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/Matthrews"
   }
 }
