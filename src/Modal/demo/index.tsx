@@ -18,7 +18,6 @@ const ModalDemo = () => {
   };
 
   console.log('ModalDemo visible', visible);
-
   return (
     <div>
       <Button onClick={handleClick}>打开Modal</Button>
