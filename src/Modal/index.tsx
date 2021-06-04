@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useCallback, useState, useMemo } from 'react';
 import classNames from 'classnames';
 import ReactDOM from 'react-dom';
 import { default as Button } from '../Button';
@@ -15,7 +15,7 @@ export interface ModalProps {
   /**
    * 是否可见
    */
-  visible?: boolean;
+  visible: boolean;
   /**
    * 前缀
    */
@@ -46,36 +46,54 @@ const Modal = ({
   prefixCls: customizePrefixCls,
   className,
   title,
-  visible: show,
+  visible,
   children,
   onClose,
   onOk,
   onCancel,
 }: ModalProps) => {
-  debugger;
-  const [visible, setVisible] = useState<Boolean>(show as boolean);
+  const [show, setShow] = useState(false);
   const prefixCls = getPrefixCls('modal', customizePrefixCls);
 
   useEffect(() => {
-    console.log('useEffect');
+    console.log('Modal useEffect createElement');
     let ele = document.createElement('div');
     ele.id = 'x-modal-root';
     document.body.appendChild(ele);
     return () => {
+      console.log('removeChild');
       document.body.removeChild(ele);
     };
   }, []);
 
-  const handleCloseModal = useCallback(() => {
-    setVisible(false);
+  useEffect(() => {
+    if (visible) {
+      console.log('Modal useEffect setShow');
+      setShow(visible);
+    }
+    return () => {};
+  }, [visible]);
+
+  const handleCloseModal = () => {
+    setShow(false);
     if (typeof onClose === 'function') {
       onClose();
     }
-  }, [visible]);
+  };
 
-  const portalEle = document.getElementById('x-modal-root');
+  const handleOk = useCallback(() => {
+    setShow(false);
+    if (typeof onOk === 'function') {
+      onOk();
+    }
+  }, [onOk]);
 
-  if (!portalEle) return null;
+  const handleCancel = useCallback(() => {
+    setShow(false);
+    if (typeof onCancel === 'function') {
+      onCancel();
+    }
+  }, [onCancel]);
 
   let content = (
     <div className={classNames(prefixCls, className)}>
@@ -89,10 +107,10 @@ const Modal = ({
         </div>
         <div className={classNames(`${prefixCls}-body`)}>{children}</div>
         <div className={classNames(`${prefixCls}-footer`)}>
-          <Button type="default" onClick={onCancel}>
+          <Button type="default" onClick={handleCancel}>
             取消
           </Button>
-          <Button type="primary" onClick={onOk}>
+          <Button type="primary" onClick={handleOk}>
             确定
           </Button>
         </div>
@@ -100,7 +118,13 @@ const Modal = ({
     </div>
   );
 
-  return visible ? ReactDOM.createPortal(content, portalEle) : null;
+  const portalEle = document.getElementById('x-modal-root');
+
+  console.log('Modal render', show, portalEle);
+
+  if (!portalEle) return null;
+
+  return show ? ReactDOM.createPortal(content, portalEle) : null;
 };
 
-export default React.memo(Modal);
+export default Modal;
