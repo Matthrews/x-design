@@ -15,7 +15,7 @@ export interface ModalProps {
   /**
    * 是否可见
    */
-  visible?: boolean;
+  visible: boolean;
   /**
    * 前缀
    */
