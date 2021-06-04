@@ -3,19 +3,22 @@
  * desc: 第一个对话框。
  */
 
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Modal, Button } from '@Matthrews/x-design';
 
-const Demo = () => {
+const ModalDemo = () => {
   const [visible, setVisible] = useState<Boolean>(false);
-  const handleClick = (e: any) => {
-    console.log('handleClick', e);
+  const handleClick = () => {
+    console.log('handleClick');
     setVisible(true);
   };
 
   const handleClose = () => {
     setVisible(false);
   };
+
+  console.log('ModalDemo visible', visible);
+
   return (
     <div>
       <Button onClick={handleClick}>打开Modal</Button>
@@ -28,4 +31,4 @@ const Demo = () => {
   );
 };
 
-export default Demo;
+export default ModalDemo;
