@@ -10,57 +10,57 @@
   height: 100%;
   z-index: 1050;
   box-sizing: border-box;
+}
+.@{prefix}-hidden {
+  display: none;
+}
 
-  &-hidden {
-    display: none;
-  }
+.fade-effect() {
+  animation-duration: 0.3s;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
+}
 
-  .fade-effect() {
-    animation-duration: 0.3s;
-    animation-fill-mode: both;
-    animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
-  }
+.@{prefix}-fade-enter,
+.@{prefix}-fade-appear {
+  opacity: 0;
+  .fade-effect();
+  animation-play-state: paused;
+}
 
-  &-fade-enter,
-  &-fade-appear {
+.@{prefix}-fade-leave {
+  .fade-effect();
+  animation-play-state: paused;
+}
+.@{prefix}-fade-leave {
+  .fade-effect();
+  animation-play-state: paused;
+}
+
+.@{prefix}-fade-enter.@{prefix}-fade-enter-active,
+.@{prefix}-fade-appear.@{prefix}-fade-appear-active {
+  animation-name: rcDialogFadeIn;
+  animation-play-state: running;
+}
+
+.@{prefix}-fade-leave.@{prefix}-fade-leave-active {
+  animation-name: rcDialogFadeOut;
+  animation-play-state: running;
+}
+@keyframes rcDialogFadeIn {
+  0% {
     opacity: 0;
-    .fade-effect();
-    animation-play-state: paused;
   }
+  100% {
+    opacity: 1;
+  }
+}
 
-  &-fade-leave {
-    .fade-effect();
-    animation-play-state: paused;
+@keyframes rcDialogFadeOut {
+  0% {
+    opacity: 1;
   }
-  &-fade-leave {
-    .fade-effect();
-    animation-play-state: paused;
-  }
-
-  &-fade-enter&-fade-enter-active,
-  &-fade-appear&-fade-appear-active {
-    animation-name: rcDialogFadeIn;
-    animation-play-state: running;
-  }
-
-  &-fade-leave&-fade-leave-active {
-    animation-name: rcDialogFadeOut;
-    animation-play-state: running;
-  }
-  @keyframes rcDialogFadeIn {
-    0% {
-      transform: translate(0, -25%);
-    }
-    100% {
-      transform: translate(0, 0);
-    }
-  }
-  @keyframes rcDialogFadeOut {
-    0% {
-      transform: translate(0, 0);
-    }
-    100% {
-      transform: translate(0, -25%);
-    }
+  100% {
+    opacity: 0;
   }
 }
