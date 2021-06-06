@@ -7,6 +7,11 @@ import { getPrefixCls } from '../_util';
 
 import './style.less';
 
+export interface CustomConfig {
+  closeAfter?: number;
+  closeCallback?: (timeOver: boolean) => void;
+}
+
 export type MaskProps = {
   /**
    * prefix
@@ -27,12 +32,15 @@ export type MaskProps = {
   /**
    * maskProps
    */
-  maskProps?: React.ReactNode;
+  maskProps?: object;
   /**
    * mask 点击事件
-   * hide
    */
   maskClick?: () => {};
+  /**
+   * 自定义配置
+   */
+  config?: CustomConfig;
 };
 
 export default function Mask(props: MaskProps) {
@@ -41,61 +49,66 @@ export default function Mask(props: MaskProps) {
     style,
     visible,
     maskProps,
-    motionName,
+    motionName = 'x-mask-fade',
     maskClick,
+    config = {},
   } = props;
   const [show, setShow] = useState(false);
   const prefixCls = getPrefixCls('mask', customizePrefixCls);
+  const maskRef: React.LegacyRef<HTMLDivElement> = React.createRef();
 
   useEffect(() => {
-    console.log('Mask useEffect createElement');
-    let ele = document.createElement('div');
-    ele.id = 'x-mask-root';
-    document.body.appendChild(ele);
-    return () => {
-      console.log('removeChild');
-      document.body.removeChild(ele);
-    };
-  }, []);
+    setShow(visible);
+  }, [visible]);
 
   useEffect(() => {
     if (visible) {
-      console.log('Mask useEffect setShow');
-      setShow(visible);
+      document.body.classList.add('x-scrolling-effect');
+    } else {
+      document.body.classList.remove('x-scrolling-effect');
     }
-    return () => {};
   }, [visible]);
 
+  useEffect(() => {
+    const { closeAfter, closeCallback } = config;
+    if (closeAfter) {
+      console.log('useEffect', maskRef);
+      if (maskRef?.current) {
+        maskRef.current.onclick = null;
+        // maskRef.current.removeEventListener('click', handleMaskClick);
+      }
+      console.log('closeAfter');
+      setTimeout(() => {
+        setShow(false);
+        if (typeof closeCallback === 'function') {
+          closeCallback(true);
+        }
+      }, closeAfter);
+    }
+  }, [config, maskRef]);
+
   const handleMaskClick = useCallback(() => {
-    console.log('handleMaskClick useCallback');
     if (typeof maskClick === 'function') {
       maskClick();
     } else {
       setShow(false);
     }
-  }, [maskClick]);
-
-  console.log('prefixCls', `${prefixCls}-fade`);
+  }, []);
 
   let content = (
     <CSSMotion
       key="mask"
       visible={visible}
-      motionName={motionName || `${prefixCls}-fade`}
+      motionName={motionName}
       leavedClassName={`${prefixCls}-hidden`}
     >
       {({ className: motionClassName, style: motionStyle }) => {
-        console.log('motionClassName', motionClassName);
-        console.log('style', motionStyle);
-
+        console.log('motionStyle', motionClassName, motionStyle);
         return (
           <div
             style={{ ...motionStyle, ...style }}
             className={classNames(`${prefixCls}`, motionClassName)}
-            // onClick={() => {
-            //   console.log('Clicked mask');
-            //   setShow(false);
-            // }}
+            ref={maskRef}
             onClick={handleMaskClick}
             {...maskProps}
           />
@@ -104,11 +117,5 @@ export default function Mask(props: MaskProps) {
     </CSSMotion>
   );
 
-  const portalEle = document.getElementById('x-mask-root');
-
-  console.log('Mask render', show, portalEle);
-
-  if (!portalEle) return null;
-
-  return show ? ReactDOM.createPortal(content, portalEle) : null;
+  return show ? ReactDOM.createPortal(content, document.body) : null;
 }

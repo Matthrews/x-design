@@ -1,20 +1,14 @@
 ## Mask
 
-<code src="./demo/index.tsx">
+<code src="./demo/basic">
+
+<code src="./demo/count">
 
 <API src="./index.tsx"></API>
 
-## TODO
-
-- 弹窗出来如何阻止被遮住的页面的滚动
-
-- 关闭弹窗后如何聚焦到原来元素
-
-- 如何使用 ECS 关闭
-
 ## 参考
 
-- https://www.cnblogs.com/chenjg/p/9501333.html
+- https://segmentfault.com/a/1190000018626140
 - https://github.com/react-component/dialog
 
 ## 更多
