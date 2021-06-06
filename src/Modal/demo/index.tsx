@@ -10,7 +10,7 @@ const ModalDemo = () => {
   const [visible, setVisible] = useState<Boolean>(false);
   const handleClick = () => {
     console.log('handleClick');
-    setVisible(true);
+    setVisible((oldState) => !oldState);
   };
 
   const handleClose = () => {

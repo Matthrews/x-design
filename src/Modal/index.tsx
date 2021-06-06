@@ -56,19 +56,7 @@ const Modal = ({
   const prefixCls = getPrefixCls('modal', customizePrefixCls);
 
   useEffect(() => {
-    console.log('Modal useEffect createElement');
-    let ele = document.createElement('div');
-    ele.id = 'x-modal-root';
-    document.body.appendChild(ele);
-    return () => {
-      console.log('removeChild');
-      document.body.removeChild(ele);
-    };
-  }, []);
-
-  useEffect(() => {
     if (visible) {
-      console.log('Modal useEffect setShow');
       setShow(visible);
     }
     return () => {};
@@ -95,36 +83,44 @@ const Modal = ({
     }
   }, [onCancel]);
 
+  useEffect(() => {
+    if (visible) {
+      document.body.classList.add('x-scrolling-effect');
+    } else {
+      document.body.classList.remove('x-scrolling-effect');
+    }
+  }, [visible]);
+
   let content = (
-    <div className={classNames(prefixCls, className)}>
-      <div className={classNames(`${prefixCls}-mask`)}></div>
-      <div className={classNames(`${prefixCls}-content`)}>
-        <div className={classNames(`${prefixCls}-header`)}>
-          <div className={classNames(`${prefixCls}-title`)}>{title}</div>
-          <Button type="text" onClick={handleCloseModal}>
-            <span className={classNames(`${prefixCls}-close-x`)}>×</span>
-          </Button>
-        </div>
-        <div className={classNames(`${prefixCls}-body`)}>{children}</div>
-        <div className={classNames(`${prefixCls}-footer`)}>
-          <Button type="default" onClick={handleCancel}>
-            取消
-          </Button>
-          <Button type="primary" onClick={handleOk}>
-            确定
-          </Button>
-        </div>
+    <div className={classNames(`${prefixCls}-content`)}>
+      <div className={classNames(`${prefixCls}-header`)}>
+        <div className={classNames(`${prefixCls}-title`)}>{title}</div>
+        <Button type="text" onClick={handleCloseModal}>
+          <span className={classNames(`${prefixCls}-close-x`)}>×</span>
+        </Button>
+      </div>
+      <div className={classNames(`${prefixCls}-body`)}>{children}</div>
+      <div className={classNames(`${prefixCls}-footer`)}>
+        <Button type="default" onClick={handleCancel}>
+          取消
+        </Button>
+        <Button type="primary" onClick={handleOk}>
+          确定
+        </Button>
       </div>
     </div>
   );
 
-  const portalEle = document.getElementById('x-modal-root');
+  let modal = (
+    <div className={classNames(prefixCls, className)}>
+      <div className={classNames(`${prefixCls}-mask`)}></div>
+      <div className={classNames(`${prefixCls}-wrapper`)}>{content}</div>
+    </div>
+  );
 
-  console.log('Modal render', show, portalEle);
+  console.log('Modal render', show);
 
-  if (!portalEle) return null;
-
-  return show ? ReactDOM.createPortal(content, portalEle) : null;
+  return show ? ReactDOM.createPortal(modal, document.body) : null;
 };
 
 export default Modal;
