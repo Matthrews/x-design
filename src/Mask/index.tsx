@@ -12,7 +12,7 @@ export interface CustomConfig {
   closeCallback?: (timeOver: boolean) => void;
 }
 
-export type MaskProps = {
+export interface MaskProps {
   /**
    * prefix
    */
@@ -41,7 +41,7 @@ export type MaskProps = {
    * 自定义配置
    */
   config?: CustomConfig;
-};
+}
 
 export default function Mask(props: MaskProps) {
   const {
@@ -54,11 +54,12 @@ export default function Mask(props: MaskProps) {
     config = {},
   } = props;
   const [show, setShow] = useState(false);
+  const [closable, setClosable] = useState(true);
   const prefixCls = getPrefixCls('mask', customizePrefixCls);
-  const maskRef: React.LegacyRef<HTMLDivElement> = React.createRef();
 
   useEffect(() => {
     setShow(visible);
+    return () => {};
   }, [visible]);
 
   useEffect(() => {
@@ -70,30 +71,32 @@ export default function Mask(props: MaskProps) {
   }, [visible]);
 
   useEffect(() => {
-    const { closeAfter, closeCallback } = config;
+    const { closeAfter } = config;
     if (closeAfter) {
-      console.log('useEffect', maskRef);
-      if (maskRef?.current) {
-        maskRef.current.onclick = null;
-        // maskRef.current.removeEventListener('click', handleMaskClick);
-      }
+      setClosable(false);
       console.log('closeAfter');
-      setTimeout(() => {
-        setShow(false);
-        if (typeof closeCallback === 'function') {
-          closeCallback(true);
-        }
-      }, closeAfter);
+      setTimeout(callback, closeAfter);
     }
-  }, [config, maskRef]);
+    return clearTimeout();
+  }, [config, visible]);
+
+  const callback = () => {
+    const { closeCallback } = config;
+    handleMaskClick();
+    if (typeof closeCallback === 'function') {
+      closeCallback(true);
+    }
+  };
 
   const handleMaskClick = useCallback(() => {
-    if (typeof maskClick === 'function') {
-      maskClick();
-    } else {
-      setShow(false);
+    if (closable) {
+      if (typeof maskClick === 'function') {
+        maskClick();
+      } else {
+        setShow(false);
+      }
     }
-  }, []);
+  }, [closable]);
 
   let content = (
     <CSSMotion
@@ -108,7 +111,6 @@ export default function Mask(props: MaskProps) {
           <div
             style={{ ...motionStyle, ...style }}
             className={classNames(`${prefixCls}`, motionClassName)}
-            ref={maskRef}
             onClick={handleMaskClick}
             {...maskProps}
           />
