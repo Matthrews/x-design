@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import { getPrefixCls } from '../_util';
 
 import './style.less';
+import { getContainer } from '../_util/index';
 
 export interface CustomConfig {
   closeAfter?: number;
@@ -38,9 +39,17 @@ export interface MaskProps {
    */
   maskClick?: () => {};
   /**
+   * 挂载DOM节点
+   */
+  getContainer?: () => HTMLElement | HTMLElement;
+  /**
    * 自定义配置
    */
   config?: CustomConfig;
+  /**
+   * onClose
+   */
+  onClose: () => void;
 }
 
 export default function Mask(props: MaskProps) {
@@ -52,10 +61,16 @@ export default function Mask(props: MaskProps) {
     motionName = 'x-mask-fade',
     maskClick,
     config = {},
+    getContainer: getContainerDom,
+    onClose,
   } = props;
   const [show, setShow] = useState(false);
   const [closable, setClosable] = useState(true);
   const prefixCls = getPrefixCls('mask', customizePrefixCls);
+
+  useEffect(() => {
+    return onClose?.();
+  }, []);
 
   useEffect(() => {
     setShow(visible);
@@ -74,19 +89,8 @@ export default function Mask(props: MaskProps) {
     const { closeAfter } = config;
     if (closeAfter) {
       setClosable(false);
-      console.log('closeAfter');
-      setTimeout(callback, closeAfter);
     }
-    return clearTimeout();
   }, [config, visible]);
-
-  const callback = () => {
-    const { closeCallback } = config;
-    handleMaskClick();
-    if (typeof closeCallback === 'function') {
-      closeCallback(true);
-    }
-  };
 
   const handleMaskClick = useCallback(() => {
     if (closable) {
@@ -98,6 +102,15 @@ export default function Mask(props: MaskProps) {
     }
   }, [closable]);
 
+  let Dom = getContainerDom?.();
+
+  const { children, ...rest } = maskProps || {};
+  console.log('getContainer', Dom, children);
+
+  if (children && Dom) {
+    ReactDOM.render(children, Dom);
+  }
+
   let content = (
     <CSSMotion
       key="mask"
@@ -106,13 +119,12 @@ export default function Mask(props: MaskProps) {
       leavedClassName={`${prefixCls}-hidden`}
     >
       {({ className: motionClassName, style: motionStyle }) => {
-        console.log('motionStyle', motionClassName, motionStyle);
         return (
           <div
             style={{ ...motionStyle, ...style }}
             className={classNames(`${prefixCls}`, motionClassName)}
             onClick={handleMaskClick}
-            {...maskProps}
+            {...rest}
           />
         );
       }}

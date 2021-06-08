@@ -4,6 +4,8 @@
 
 <code src="./demo/count">
 
+<code src="./demo/getContainer">
+
 <API src="./index.tsx"></API>
 
 ## 参考
@@ -14,6 +16,8 @@
 ## TODO
 
 - DOM 放在里面，关闭不清除
+
+- z-index 动态增加
 
 ## 更多
 

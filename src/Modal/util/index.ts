@@ -1,23 +1,5 @@
-import ReactDOM from 'react-dom';
-
-const globalPrefixCls = 'x';
-
-export const getPrefixCls = (
-  suffixCls?: string,
-  customizePrefixCls?: string,
-) => {
-  if (customizePrefixCls) return customizePrefixCls;
-
-  return suffixCls ? `${globalPrefixCls}-${suffixCls}` : globalPrefixCls;
-};
-
-export const canUseDOM = !!(
-  typeof window !== 'undefined' &&
-  window.document &&
-  window.document.createElement
-);
-
-export const isReact16 = canUseDOM && ReactDOM.createPortal !== undefined;
+import { isReact16, canUseDOM } from './../../_util/index';
+import React from 'react';
 
 export type GetContainer = string | HTMLElement | (() => HTMLElement);
 
@@ -46,7 +28,7 @@ const getParent = (getContainer: GetContainer) => {
 
 const attachToParent = (force = false) => {
   if (force || (container && !container.parentNode)) {
-    const parent = getParent('getContainer');
+    const parent = getParent(getContainer);
     if (parent) {
       parent.appendChild(container);
       return true;
@@ -58,7 +40,7 @@ const attachToParent = (force = false) => {
   return true;
 };
 
-export const getContainer = () => {
+const getContainer = () => {
   if (!canUseDOM) {
     return null;
   }
@@ -66,7 +48,7 @@ export const getContainer = () => {
     container = document.createElement('div');
     attachToParent(true);
   }
-  // setWrapperClassName();
+  setWrapperClassName();
   return container;
 };
 
@@ -86,5 +68,3 @@ const removeCurrentContainer = () => {
   // Let's handle this again to avoid refactor issue.
   container?.parentNode?.removeChild(container);
 };
-
-console.log('Conteint', container);
