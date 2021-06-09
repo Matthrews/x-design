@@ -45,3 +45,30 @@
   color: #1890ff;
   text-shadow: none;
 }
+
+.@{prefix}::before {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  bottom: -1px;
+  left: -1px;
+  z-index: 1;
+  display: none;
+  background: #fff;
+  border-radius: inherit;
+  opacity: 0.35;
+  transition: opacity 0.2s;
+  content: '';
+  pointer-events: none;
+}
+
+.@{prefix}-loading {
+  position: relative;
+  &:not([disabled]) {
+    pointer-events: none;
+  }
+
+  &::before {
+    display: block;
+  }
+}

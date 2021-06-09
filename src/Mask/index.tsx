@@ -7,6 +7,7 @@ import { getPrefixCls } from '../_util';
 
 import './style.less';
 import { getContainer } from '../_util/index';
+import Button from '@/Button';
 
 export interface CustomConfig {
   closeAfter?: number;
@@ -110,6 +111,25 @@ export default function Mask(props: MaskProps) {
   if (children && Dom) {
     ReactDOM.render(children, Dom);
   }
+
+  const renderFooter = (locale: ModalLocale) => {
+    const { okText, okType, cancelText, confirmLoading } = props;
+    return (
+      <>
+        <Button onClick={handleCancel} {...props.cancelButtonProps}>
+          {cancelText || locale.cancelText}
+        </Button>
+        <Button
+          {...convertLegacyProps(okType)}
+          loading={confirmLoading}
+          onClick={handleOk}
+          {...props.okButtonProps}
+        >
+          {okText || locale.okText}
+        </Button>
+      </>
+    );
+  };
 
   let content = (
     <CSSMotion

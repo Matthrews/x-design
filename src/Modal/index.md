@@ -4,4 +4,8 @@
 
 <code src="./demo/count.tsx">
 
+<code src="./demo/async.tsx">
+
+<code src="./demo/notification.tsx">
+
 <API src="./index.tsx"></API>
