@@ -61,7 +61,6 @@
   content: '';
   pointer-events: none;
 }
-
 .@{prefix}-loading {
   position: relative;
   &:not([disabled]) {
@@ -70,5 +69,23 @@
 
   &::before {
     display: block;
+  }
+
+  &-icon {
+    transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    .xicon {
+      padding-right: 8px;
+      animation: none;
+      // for smooth button padding transition
+      svg {
+        animation: loadingCircle 1s infinite linear;
+      }
+    }
+  }
+}
+
+@keyframes loadingCircle {
+  100% {
+    transform: rotate(360deg);
   }
 }

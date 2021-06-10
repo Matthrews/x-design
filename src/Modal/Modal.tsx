@@ -71,27 +71,32 @@ const Modal = ({
     }
   };
 
-  const handleOk = useCallback(() => {
-    setShow(false);
-    if (typeof onOk === 'function') {
-      onOk();
-    }
-  }, [onOk, confirmLoading]);
+  const handleOk = (e: React.MouseEvent<HTMLButtonElement>) => {
+    onOk?.(e);
+  };
 
-  const handleCancel = useCallback(() => {
+  console.log('handleOk', confirmLoading);
+
+  const handleCancel = () => {
     setShow(false);
     if (typeof onCancel === 'function') {
       onCancel();
     }
-  }, [onCancel]);
+  };
+
+  // useEffect(() => {
+  //   if (!confirmLoading) {
+  //     setShow(false);
+  //   }
+  // }, [confirmLoading]);
 
   useEffect(() => {
-    if (visible) {
+    if (show) {
       document.body.classList.add('x-scrolling-effect');
     } else {
       document.body.classList.remove('x-scrolling-effect');
     }
-  }, [visible]);
+  }, [show]);
 
   let content = (
     <div className={classNames(`${prefixCls}-content`)}>

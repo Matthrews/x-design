@@ -32,7 +32,6 @@ export default ({ identifier, export: expt }: IApiComponentProps) => {
     ({ identifier }) => !OMITS.includes(identifier),
   );
 
-  console.log('API', filterData);
   return (
     <>
       {data && (
