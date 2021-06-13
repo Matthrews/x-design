@@ -33,7 +33,7 @@ const MaskDemo = () => {
           setCount((preCount) => preCount - 1);
         }, 1000);
       } else if (count === 0) {
-        console.log('interval over');
+        console.log('outter over');
         setVisible(false);
         clearInterval(intervalRef.current);
       }
@@ -56,11 +56,9 @@ const MaskDemo = () => {
     [count],
   );
 
-  // console.log('counter', visible, count);
-
   return (
     <div>
-      <Button onClick={() => setVisible(true)}>打开Mask</Button>
+      <Button onClick={() => setVisible(true)}>打开Mask后10s自动关闭</Button>
       <Mask
         visible={visible}
         motionName="x-mask-fade"

@@ -20,12 +20,10 @@ export const canUseDOM = !!(
 export const isReact16 = canUseDOM && ReactDOM.createPortal !== undefined;
 
 export type GetContainer =
-  | string
-  | HTMLElement
-  | (() => HTMLElement)
+  | (() => HTMLElement | HTMLElement | string)
   | undefined;
 
-export const getParent = (getContainer: GetContainer) => {
+export const getParent = (getContainer: any) => {
   if (!canUseDOM) {
     return null;
   }

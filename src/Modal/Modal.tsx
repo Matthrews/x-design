@@ -2,7 +2,7 @@ import React, { useEffect, useCallback, useState, useMemo } from 'react';
 import classNames from 'classnames';
 import ReactDOM from 'react-dom';
 import { default as Button } from '../Button';
-import { getPrefixCls } from '@/_util';
+import { getPrefixCls, getParent as getContainerDom } from '@/_util';
 
 export interface ModalProps {
   /**
@@ -13,6 +13,10 @@ export interface ModalProps {
    * 是否可见
    */
   visible: boolean;
+  /**
+   * 挂载DOM节点
+   */
+  getContainer?: () => HTMLElement | HTMLElement | string;
   /**
    * 异步确认回调
    */
@@ -55,12 +59,15 @@ const Modal = ({
   confirmLoading,
   children,
   footer,
+  getContainer,
   onClose,
   onOk,
   onCancel,
 }: ModalProps) => {
   const [show, setShow] = useState(false);
   const prefixCls = getPrefixCls('modal', customizePrefixCls);
+
+  let container = getContainerDom(getContainer);
 
   useEffect(() => {
     if (visible) {
