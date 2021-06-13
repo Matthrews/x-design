@@ -10,4 +10,4 @@
 
 <code src="./demo/notification.tsx">
 
-<API src="./index.tsx"></API>
+<API src="../../src/Modal/index.tsx"></API>

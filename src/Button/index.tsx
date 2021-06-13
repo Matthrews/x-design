@@ -1,4 +1,4 @@
-import React, { SyntheticEvent } from 'react';
+import React, { ReactNode, SyntheticEvent } from 'react';
 import classNames from 'classnames';
 
 import { getPrefixCls } from '../_util';
@@ -11,6 +11,18 @@ export interface ButtonProps {
    */
   type?: 'primary' | 'dashed' | 'link' | 'text' | 'default';
   /**
+   * 加载中...
+   */
+  loading?: boolean | number | { delay?: number };
+  /**
+   * 子结点
+   */
+  children?: ReactNode;
+  /**
+   * 点击按钮时的回调
+   */
+  onClick?: (envent?: SyntheticEvent) => void;
+  /**
    * 按钮前缀
    */
   prefixCls?: string;
@@ -18,21 +30,9 @@ export interface ButtonProps {
    * 按钮className
    */
   className?: string;
-  /**
-   *
-   */
-  loading?: boolean | { delay?: number };
-  /**
-   * 子结点
-   */
-  children?: React.ReactNode;
-  /**
-   * 点击按钮时的回调
-   */
-  onClick?: (envent?: any) => void;
 }
 
-type Loading = number | boolean;
+type Loading = boolean | number | { delay?: number };
 
 export default ({
   prefixCls: customizePrefixCls,

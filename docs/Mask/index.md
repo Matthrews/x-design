@@ -8,7 +8,7 @@
 
 <code src="./demo/getContainer">
 
-<API src="./index.tsx"></API>
+<API src="../../src/Mask/index.tsx"></API>
 
 ## 参考
 
