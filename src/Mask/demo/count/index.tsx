@@ -1,6 +1,6 @@
 /**
- * title: Mask
- * desc: 定时关闭
+ * title: 定时关闭
+ * desc: 外部设置定时器
  */
 
 import React, {
@@ -33,9 +33,9 @@ const MaskDemo = () => {
           setCount((preCount) => preCount - 1);
         }, 1000);
       } else if (count === 0) {
-        console.log('nihao');
-        clearInterval(intervalRef.current);
+        console.log('interval over');
         setVisible(false);
+        clearInterval(intervalRef.current);
       }
     }
   }, [visible, count]);
@@ -56,7 +56,7 @@ const MaskDemo = () => {
     [count],
   );
 
-  console.log('counter', count);
+  // console.log('counter', visible, count);
 
   return (
     <div>
@@ -66,13 +66,6 @@ const MaskDemo = () => {
         motionName="x-mask-fade"
         maskClick={handleMaskClick}
         maskProps={{ children: maskContent }}
-        config={{
-          closeAfter: 10000,
-          // closeCallback: (res: any) => {
-          //   setOver(res);
-          //   console.log('是否结束了', res);
-          // },
-        }}
       />
     </div>
   );

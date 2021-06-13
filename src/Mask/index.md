@@ -4,6 +4,8 @@
 
 <code src="./demo/count">
 
+<code src="./demo/count2">
+
 <code src="./demo/getContainer">
 
 <API src="./index.tsx"></API>

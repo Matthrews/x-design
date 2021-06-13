@@ -19,11 +19,13 @@ export const canUseDOM = !!(
 
 export const isReact16 = canUseDOM && ReactDOM.createPortal !== undefined;
 
-export type GetContainer = string | HTMLElement | (() => HTMLElement);
+export type GetContainer =
+  | string
+  | HTMLElement
+  | (() => HTMLElement)
+  | undefined;
 
-let container: HTMLElement;
-
-const getParent = (getContainer: GetContainer) => {
+export const getParent = (getContainer: GetContainer) => {
   if (!canUseDOM) {
     return null;
   }
@@ -44,47 +46,47 @@ const getParent = (getContainer: GetContainer) => {
   return document.body;
 };
 
-const attachToParent = (force = false) => {
-  if (force || (container && !container.parentNode)) {
-    const parent = getParent('getContainer');
-    if (parent) {
-      parent.appendChild(container);
-      return true;
-    }
+// const attachToParent = (force = false) => {
+//   if (force || (container && !container.parentNode)) {
+//     const parent = getParent('getContainer');
+//     if (parent) {
+//       parent.appendChild(container);
+//       return true;
+//     }
 
-    return false;
-  }
+//     return false;
+//   }
 
-  return true;
-};
+//   return true;
+// };
 
-export const getContainer = () => {
-  if (!canUseDOM) {
-    return null;
-  }
-  if (!container) {
-    container = document.createElement('div');
-    attachToParent(true);
-  }
-  // setWrapperClassName();
-  return container;
-};
+// export const getContainer = () => {
+//   if (!canUseDOM) {
+//     return null;
+//   }
+//   if (!container) {
+//     container = document.createElement('div');
+//     attachToParent(true);
+//   }
+//   // setWrapperClassName();
+//   return container;
+// };
 
-const setWrapperClassName = () => {
-  const { wrapperClassName } = {};
-  if (
-    container &&
-    wrapperClassName &&
-    wrapperClassName !== container.className
-  ) {
-    container.className = wrapperClassName;
-  }
-};
+// const setWrapperClassName = () => {
+//   const { wrapperClassName } = {};
+//   if (
+//     container &&
+//     wrapperClassName &&
+//     wrapperClassName !== container.className
+//   ) {
+//     container.className = wrapperClassName;
+//   }
+// };
 
-const removeCurrentContainer = () => {
-  // Portal will remove from `parentNode`.
-  // Let's handle this again to avoid refactor issue.
-  container?.parentNode?.removeChild(container);
-};
+// const removeCurrentContainer = () => {
+//   // Portal will remove from `parentNode`.
+//   // Let's handle this again to avoid refactor issue.
+//   container?.parentNode?.removeChild(container);
+// };
 
-console.log('Conteint', container);
+// console.log('Content', container);

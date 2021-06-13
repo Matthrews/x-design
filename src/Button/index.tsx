@@ -65,8 +65,6 @@ export default ({
     }
   }, [loadingOrDelay]);
 
-  console.log('loadingOrDelay', loadingOrDelay);
-
   const iconNode = loadingOrDelay ? (
     <span className={classNames(`${prefixCls}-loading`)}>
       <span className="x-btn-loading-icon">

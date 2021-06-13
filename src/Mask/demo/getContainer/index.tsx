@@ -7,9 +7,9 @@ export default () => {
 
   const [visible, setVisible] = React.useState(false);
 
-  React.useEffect(() => {
-    console.log('>>>', divRef.current);
-  }, []);
+  // React.useEffect(() => {
+  //   console.log('current divRef', divRef.current);
+  // }, []);
 
   const content = (
     <div style={{ display: visible ? 'block' : 'none' }} ref={divRef}>
