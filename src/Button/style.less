@@ -45,3 +45,47 @@
   color: #1890ff;
   text-shadow: none;
 }
+
+.@{prefix}::before {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  bottom: -1px;
+  left: -1px;
+  z-index: 1;
+  display: none;
+  background: #fff;
+  border-radius: inherit;
+  opacity: 0.35;
+  transition: opacity 0.2s;
+  content: '';
+  pointer-events: none;
+}
+.@{prefix}-loading {
+  position: relative;
+  &:not([disabled]) {
+    pointer-events: none;
+  }
+
+  &::before {
+    display: block;
+  }
+
+  &-icon {
+    transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    .xicon {
+      padding-right: 8px;
+      animation: none;
+      // for smooth button padding transition
+      svg {
+        animation: loadingCircle 1s infinite linear;
+      }
+    }
+  }
+}
+
+@keyframes loadingCircle {
+  100% {
+    transform: rotate(360deg);
+  }
+}

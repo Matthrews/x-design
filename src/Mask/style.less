@@ -1,0 +1,73 @@
+@prefix: x-mask;
+
+.@{prefix} {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(55, 55, 55, 0.5);
+  height: 100%;
+  z-index: 1050;
+}
+
+.@{prefix}-hidden {
+  display: none;
+}
+
+.fade-effect() {
+  animation-duration: 0.3s;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
+}
+
+.@{prefix}-fade-enter,
+.@{prefix}-fade-appear {
+  opacity: 0;
+  .fade-effect();
+  animation-play-state: paused;
+}
+
+.@{prefix}-fade-leave {
+  .fade-effect();
+  animation-play-state: paused;
+}
+.@{prefix}-fade-leave {
+  .fade-effect();
+  animation-play-state: paused;
+}
+
+.@{prefix}-fade-enter.@{prefix}-fade-enter-active,
+.@{prefix}-fade-appear.@{prefix}-fade-appear-active {
+  animation-name: rcDialogFadeIn;
+  animation-play-state: running;
+}
+
+.@{prefix}-fade-leave.@{prefix}-fade-leave-active {
+  animation-name: rcDialogFadeOut;
+  animation-play-state: running;
+}
+@keyframes rcDialogFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes rcDialogFadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.x-scrolling-effect {
+  width: calc(100% - 17px);
+  overflow: hidden;
+  // transition: width 0.2s;
+  // transition: width cubic-bezier(0.25, 0.46, 0.45, 0.94) 2s;
+}

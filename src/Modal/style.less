@@ -1,15 +1,21 @@
 @prefix: x-modal;
 
-.@{prefix} {
+.@{prefix},
+.@{prefix}-wrapper {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.3);
+  z-index: 1050;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  .@{prefix}-wrapper {
+    z-index: 1051;
+  }
 
   &-mask {
     position: fixed;
@@ -66,13 +72,15 @@
   }
 }
 
-#x-modal-root {
-  position: relative;
-  z-index: 999;
+.x-scrolling-effect {
+  width: calc(100% - 17px);
+  overflow: hidden;
 }
 
-p {
-  margin: 0;
-  padding: 0;
-  outline: 0;
+.x-modal-close-x {
+  width: 16px;
+  height: 16px;
+  display: block;
+  line-height: 16px;
+  transform: scale(1.5);
 }
