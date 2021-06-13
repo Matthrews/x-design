@@ -20,6 +20,7 @@ function info() {
 
 function success() {
   Modal.success({
+    title: 'This is an success message',
     content: 'some messages...some messages...',
   });
 }

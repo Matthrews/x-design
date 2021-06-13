@@ -30,6 +30,10 @@ export interface ModalProps {
    */
   children?: React.ReactNode;
   /**
+   * 自定义页脚
+   */
+  footer?: React.ReactChildren;
+  /**
    * 关闭回调
    */
   onClose?: () => void;
@@ -50,6 +54,7 @@ const Modal = ({
   visible,
   confirmLoading,
   children,
+  footer,
   onClose,
   onOk,
   onCancel,
@@ -84,11 +89,12 @@ const Modal = ({
     }
   };
 
-  // useEffect(() => {
-  //   if (!confirmLoading) {
-  //     setShow(false);
-  //   }
-  // }, [confirmLoading]);
+  useEffect(() => {
+    if (confirmLoading === false) {
+      console.log('confirmLoading');
+      setShow(false);
+    }
+  }, [confirmLoading]);
 
   useEffect(() => {
     if (show) {
@@ -107,14 +113,16 @@ const Modal = ({
         </Button>
       </div>
       <div className={classNames(`${prefixCls}-body`)}>{children}</div>
-      <div className={classNames(`${prefixCls}-footer`)}>
-        <Button type="default" onClick={handleCancel}>
-          取消
-        </Button>
-        <Button type="primary" onClick={handleOk} loading={confirmLoading}>
-          确定
-        </Button>
-      </div>
+      {footer ?? (
+        <div className={classNames(`${prefixCls}-footer`)}>
+          <Button type="default" onClick={handleCancel}>
+            取消
+          </Button>
+          <Button type="primary" onClick={handleOk} loading={confirmLoading}>
+            确定
+          </Button>
+        </div>
+      )}
     </div>
   );
 

@@ -12,11 +12,11 @@ import confirm, {
   modalGlobalConfig,
 } from './confirm';
 
-import OriginModal from './Modal';
+import OriginModal, { ModalProps } from './Modal';
 
 import './style.less';
 
-export interface ModalFuncProps {}
+export interface ModalFuncProps extends ModalProps {}
 
 export const destroyFns: Array<() => void> = [];
 
