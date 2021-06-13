@@ -8,24 +8,29 @@ import { Button } from '@Matthrews/x-design';
 
 const Demo = () => {
   const [loadings, setLoadings] = useState<boolean[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const enterLoading = (index: number) => {
+    console.log('enterLoading clicked');
+
     setLoadings((loadings) => {
-      const newLoadings = loadings;
+      // const newLoadings = loadings;  // TODO 为什么这样不行？
+      const newLoadings = [...loadings];
       newLoadings[index] = true;
 
       return newLoadings;
     });
     setTimeout(() => {
       setLoadings((loadings) => {
-        const newLoadings = loadings;
+        const newLoadings = [...loadings];
         newLoadings[index] = false;
 
         return newLoadings;
       });
     }, 6000);
   };
-  console.log('newLoadings', loadings);
+
+  console.log('newLoadings', loading);
   return (
     <div
       style={{
@@ -41,7 +46,9 @@ const Demo = () => {
       <Button
         type="primary"
         loading={loadings[0]}
+        // loading={loading}
         onClick={() => enterLoading(0)}
+        // onClick={handleClick}
       >
         Click me!
       </Button>
