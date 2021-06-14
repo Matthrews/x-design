@@ -1,8 +1,15 @@
-import React, { useEffect, useCallback, useState, useMemo } from 'react';
+import React, {
+  useEffect,
+  useCallback,
+  useState,
+  useMemo,
+  useRef,
+} from 'react';
 import classNames from 'classnames';
 import ReactDOM from 'react-dom';
 import { default as Button } from '@/Button';
 import { getPrefixCls, getParent as getContainerDom } from '@/_util';
+import { FocusTrap } from './FocusTrap';
 
 interface ConfirmProps {
   /**
@@ -102,6 +109,8 @@ const Modal = ({
   const [show, setShow] = useState(visible);
   const prefixCls = getPrefixCls('modal', customizePrefixCls);
 
+  const modalRef = useRef(null);
+
   useEffect(() => {
     setShow(visible);
   }, [visible]);
@@ -142,10 +151,37 @@ const Modal = ({
     }
   }, [show]);
 
+  useEffect(() => {
+    if (modalRef) {
+      if (show) {
+        modalRef?.current?.focus();
+      } else {
+        modalRef?.current?.unfocus();
+      }
+    }
+  }, [show, modalRef]);
+
+  const handleKeydown = (event: KeyboardEvent) => {
+    if (event.keyCode === 27 || event.key === 'Escape ') {
+      handleCancel();
+    }
+  };
+
+  useEffect(() => {
+    if (show) {
+      document.addEventListener('keydown', handleKeydown);
+    }
+    return () => {
+      document.removeEventListener('keydown', handleKeydown);
+    };
+  }, [show]);
+
   const titleClose = useMemo(() => {
     return !type ? (
       <Button type="text" onClick={handleCloseModal}>
-        <span className={classNames(`${prefixCls}-close-x`)}>×</span>
+        <span tabIndex={999} className={classNames(`${prefixCls}-close-x`)}>
+          ×
+        </span>
       </Button>
     ) : null;
   }, [type]);
@@ -191,14 +227,21 @@ const Modal = ({
     //   </div>
     // );
     // ReactDOM.createPortal('content', container);
-    console.log('getContainerDom', container);
+    // console.log('getContainerDom', container);
 
     // TODO 能否实现mask挂载在最外面，而content挂载在里面
 
     const mask = (
       <div className={classNames(prefixCls, className)}>
         <div className={classNames(`${prefixCls}-mask`)}></div>
-        <div className={classNames(`${prefixCls}-wrapper`)}>{modalContent}</div>
+        <div
+          role="dialog"
+          ref={modalRef}
+          className={classNames(`${prefixCls}-wrapper`)}
+        >
+          <FocusTrap container={modalRef} initialFocusRef={undefined} />
+          {modalContent}
+        </div>
       </div>
     );
     return show && ReactDOM.createPortal(mask, container);
@@ -207,7 +250,14 @@ const Modal = ({
   const modal = (
     <div className={classNames(prefixCls, className)}>
       <div className={classNames(`${prefixCls}-mask`)}></div>
-      <div className={classNames(`${prefixCls}-wrapper`)}>{modalContent}</div>
+      <div
+        role="dialog"
+        ref={modalRef}
+        className={classNames(`${prefixCls}-wrapper`)}
+      >
+        <FocusTrap container={modalRef} initialFocusRef={undefined} />
+        {modalContent}
+      </div>
     </div>
   );
 

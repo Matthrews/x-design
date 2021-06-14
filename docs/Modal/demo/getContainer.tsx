@@ -19,8 +19,6 @@ const ModalDemo = () => {
     setVisible(false);
   };
 
-  console.log('divRef', divRef.current);
-
   return (
     <div>
       <Button onClick={handleClick}>自定义节点挂载位置</Button>

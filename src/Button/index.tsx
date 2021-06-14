@@ -108,7 +108,12 @@ export default ({
   };
 
   return (
-    <button type="button" className={classStr} onClick={handleClick}>
+    <button
+      type="button"
+      tabIndex={0}
+      className={classStr}
+      onClick={handleClick}
+    >
       {iconNode}
       {children}
     </button>

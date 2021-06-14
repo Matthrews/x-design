@@ -15,8 +15,6 @@ const MaskDemo = () => {
     setVisible(false);
   };
 
-  console.log('Over', visible, over);
-
   return (
     <div>
       <Button onClick={() => setVisible(true)}>打开Mask后10s自动关闭</Button>

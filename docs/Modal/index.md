@@ -20,6 +20,8 @@
 
 <code src="./demo/getContainer.tsx">
 
+<code src="./demo/multiple.tsx">
+
 <API src="../../src/Modal/Modal.tsx"></API>
 
 ### 需求
