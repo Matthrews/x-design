@@ -21,7 +21,7 @@ export interface MaskProps {
   /**
    * 点击蒙层是否允许关闭
    */
-  maskClosable: boolean;
+  maskClosable?: boolean;
   /**
    * 动画名称
    */
@@ -49,7 +49,7 @@ export interface MaskProps {
   /**
    * prefix
    */
-  prefixCls: string;
+  prefixCls?: string;
   /**
    * style
    */
@@ -150,7 +150,7 @@ export default ({
             style={{ ...motionStyle, ...style }}
             className={classNames(`${prefixCls}`, motionClassName)}
             onClick={handleMaskClick}
-            {...{ children: !!children, ...maskProps }}
+            {...{ ...maskProps, children: children ?? maskProps?.children }}
           />
         );
       }}

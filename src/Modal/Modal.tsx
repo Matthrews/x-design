@@ -1,14 +1,67 @@
 import React, { useEffect, useCallback, useState, useMemo } from 'react';
 import classNames from 'classnames';
 import ReactDOM from 'react-dom';
-import { default as Button } from '../Button';
+import { default as Button } from '@/Button';
 import { getPrefixCls, getParent as getContainerDom } from '@/_util';
 
-export interface ModalProps {
+interface ConfirmProps {
   /**
-   * 标题
+   * 提示类型
+   */
+  type?: 'info' | 'success' | 'confirm' | 'warn' | 'warning' | 'error';
+  /**
+   * 提示标题
    */
   title?: string;
+  /**
+   * 提示内容
+   */
+  content?: React.ReactNode;
+}
+
+interface FooterProps {
+  /**
+   * 自定义页脚
+   */
+  footer?: React.ReactNode;
+  /**
+   * 确定文案
+   */
+  okText?: React.ReactNode;
+  /**
+   * 取消文案
+   */
+  cancelText?: React.ReactNode;
+  /**
+   * 异步确认回调
+   */
+  confirmLoading?: boolean;
+  /**
+   * 确定回调
+   */
+  onOk?: (envent?: any) => void;
+  /**
+   * 取消回调
+   */
+  onCancel?: (envent?: any) => void;
+}
+
+interface CLoseProps {
+  /**
+   * 是否可以关闭
+   */
+  closable?: boolean;
+  /**
+   * 自定义关闭 icon
+   */
+  icon?: string; // TODO
+  /**
+   * 关闭回调
+   */
+  onClose?: () => void;
+}
+
+export interface ModalProps extends ConfirmProps, FooterProps, CLoseProps {
   /**
    * 是否可见
    */
@@ -17,10 +70,6 @@ export interface ModalProps {
    * 挂载DOM节点
    */
   getContainer?: () => HTMLElement | HTMLElement | string;
-  /**
-   * 异步确认回调
-   */
-  confirmLoading?: boolean;
   /**
    * 前缀
    */
@@ -33,61 +82,44 @@ export interface ModalProps {
    * 子结点
    */
   children?: React.ReactNode;
-  /**
-   * 自定义页脚
-   */
-  footer?: React.ReactChildren;
-  /**
-   * 关闭回调
-   */
-  onClose?: () => void;
-  /**
-   * 确定回调
-   */
-  onOk?: (envent?: any) => void;
-  /**
-   * 取消回调
-   */
-  onCancel?: (envent?: any) => void;
 }
 
 const Modal = ({
   prefixCls: customizePrefixCls,
   className,
   title,
+  content,
+  type,
   visible,
   confirmLoading,
   children,
-  footer,
+  footer: customFooter,
   getContainer,
   onClose,
   onOk,
   onCancel,
 }: ModalProps) => {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(visible);
   const prefixCls = getPrefixCls('modal', customizePrefixCls);
 
-  let container = getContainerDom(getContainer);
-
   useEffect(() => {
-    if (visible) {
-      setShow(visible);
-    }
-    return () => {};
+    setShow(visible);
   }, [visible]);
 
   const handleCloseModal = () => {
     setShow(false);
     if (typeof onClose === 'function') {
       onClose();
+    } else {
+      if (typeof onCancel === 'function') {
+        onCancel();
+      }
     }
   };
 
-  const handleOk = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleOk = (e?: React.SyntheticEvent) => {
     onOk?.(e);
   };
-
-  console.log('handleOk', confirmLoading);
 
   const handleCancel = () => {
     setShow(false);
@@ -98,7 +130,6 @@ const Modal = ({
 
   useEffect(() => {
     if (confirmLoading === false) {
-      console.log('confirmLoading');
       setShow(false);
     }
   }, [confirmLoading]);
@@ -111,38 +142,76 @@ const Modal = ({
     }
   }, [show]);
 
-  let content = (
+  const titleClose = useMemo(() => {
+    return !type ? (
+      <Button type="text" onClick={handleCloseModal}>
+        <span className={classNames(`${prefixCls}-close-x`)}>×</span>
+      </Button>
+    ) : null;
+  }, [type]);
+
+  const footer = useMemo(() => {
+    return type ? (
+      <Button type="primary" onClick={handleCancel}>
+        我知道了
+      </Button>
+    ) : (
+      <>
+        <Button type="default" onClick={handleCancel}>
+          取消
+        </Button>
+        <Button type="primary" onClick={handleOk} loading={confirmLoading}>
+          确定
+        </Button>
+      </>
+    );
+  }, [type]);
+
+  const modalContent = (
     <div className={classNames(`${prefixCls}-content`)}>
       <div className={classNames(`${prefixCls}-header`)}>
         <div className={classNames(`${prefixCls}-title`)}>{title}</div>
-        <Button type="text" onClick={handleCloseModal}>
-          <span className={classNames(`${prefixCls}-close-x`)}>×</span>
-        </Button>
+        {titleClose}
       </div>
-      <div className={classNames(`${prefixCls}-body`)}>{children}</div>
-      {footer ?? (
-        <div className={classNames(`${prefixCls}-footer`)}>
-          <Button type="default" onClick={handleCancel}>
-            取消
-          </Button>
-          <Button type="primary" onClick={handleOk} loading={confirmLoading}>
-            确定
-          </Button>
-        </div>
-      )}
+      <div className={classNames(`${prefixCls}-body`)}>
+        {type ? content : children}
+      </div>
+      <div className={classNames(`${prefixCls}-footer`)}>
+        {customFooter ?? footer}
+      </div>
     </div>
   );
 
-  let modal = (
+  const container = getContainerDom(getContainer);
+
+  if (container && container !== document.body) {
+    // let content = (
+    //   <div className={classNames(prefixCls, className)}>
+    //     <div className={classNames(`${prefixCls}-wrapper`)}>{modalContent}</div>
+    //   </div>
+    // );
+    // ReactDOM.createPortal('content', container);
+    console.log('getContainerDom', container);
+
+    // TODO 能否实现mask挂载在最外面，而content挂载在里面
+
+    const mask = (
+      <div className={classNames(prefixCls, className)}>
+        <div className={classNames(`${prefixCls}-mask`)}></div>
+        <div className={classNames(`${prefixCls}-wrapper`)}>{modalContent}</div>
+      </div>
+    );
+    return show && ReactDOM.createPortal(mask, container);
+  }
+
+  const modal = (
     <div className={classNames(prefixCls, className)}>
       <div className={classNames(`${prefixCls}-mask`)}></div>
-      <div className={classNames(`${prefixCls}-wrapper`)}>{content}</div>
+      <div className={classNames(`${prefixCls}-wrapper`)}>{modalContent}</div>
     </div>
   );
 
-  console.log('Modal render', show);
-
-  return show ? ReactDOM.createPortal(modal, document.body) : null;
+  return show && ReactDOM.createPortal(modal, document.body);
 };
 
 export default Modal;

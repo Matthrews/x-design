@@ -19,14 +19,14 @@ const MaskDemo = () => {
 
   return (
     <div>
-      <Button onClick={() => setVisible(true)}>打开Mask</Button>
+      <Button onClick={() => setVisible(true)}>打开Mask后10s自动关闭</Button>
       <h2>{`计时结束了吗？${over}`}</h2>
       <Mask
         visible={visible}
         motionName="x-mask-fade"
         maskClick={handleMaskClick}
         config={{
-          closeAfter: 6000,
+          closeAfter: 10000,
           closeCallback: (res: any) => {
             setOver(res);
             console.log('是否结束了', res);

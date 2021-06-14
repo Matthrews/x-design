@@ -12,6 +12,4 @@
 
 <code src="./demo/innerCounter">
 
-<code src="./demo/getContainer">
-
 <API src="../../src/Mask/index.tsx"></API>
