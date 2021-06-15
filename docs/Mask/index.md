@@ -1,28 +1,15 @@
-## Mask
+# Mask 遮罩
+
+## 何时使用
+
+需要遮住主内容的时候,一般结合 Modal,Notication 等组件使用
+
+## 代码演示
 
 <code src="./demo/basic">
 
-<code src="./demo/count">
+<code src="./demo/counter">
 
-<code src="./demo/count2">
-
-<code src="./demo/getContainer">
+<code src="./demo/innerCounter">
 
 <API src="../../src/Mask/index.tsx"></API>
-
-## 参考
-
-- https://segmentfault.com/a/1190000018626140
-- https://github.com/react-component/dialog
-
-## TODO
-
-- DOM 放在里面，关闭不清除
-
-- z-index 动态增加
-
-## 更多
-
-- Frame Motion
-
-- CSS Motion

@@ -20,12 +20,10 @@ export const canUseDOM = !!(
 export const isReact16 = canUseDOM && ReactDOM.createPortal !== undefined;
 
 export type GetContainer =
-  | string
-  | HTMLElement
-  | (() => HTMLElement)
+  | (() => HTMLElement | HTMLElement | string)
   | undefined;
 
-export const getParent = (getContainer: GetContainer) => {
+export const getParent = (getContainer: any) => {
   if (!canUseDOM) {
     return null;
   }
@@ -45,48 +43,3 @@ export const getParent = (getContainer: GetContainer) => {
   }
   return document.body;
 };
-
-// const attachToParent = (force = false) => {
-//   if (force || (container && !container.parentNode)) {
-//     const parent = getParent('getContainer');
-//     if (parent) {
-//       parent.appendChild(container);
-//       return true;
-//     }
-
-//     return false;
-//   }
-
-//   return true;
-// };
-
-// export const getContainer = () => {
-//   if (!canUseDOM) {
-//     return null;
-//   }
-//   if (!container) {
-//     container = document.createElement('div');
-//     attachToParent(true);
-//   }
-//   // setWrapperClassName();
-//   return container;
-// };
-
-// const setWrapperClassName = () => {
-//   const { wrapperClassName } = {};
-//   if (
-//     container &&
-//     wrapperClassName &&
-//     wrapperClassName !== container.className
-//   ) {
-//     container.className = wrapperClassName;
-//   }
-// };
-
-// const removeCurrentContainer = () => {
-//   // Portal will remove from `parentNode`.
-//   // Let's handle this again to avoid refactor issue.
-//   container?.parentNode?.removeChild(container);
-// };
-
-// console.log('Content', container);

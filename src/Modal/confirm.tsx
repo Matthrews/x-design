@@ -82,9 +82,9 @@ export default function confirm(config: ModalFuncProps) {
     currentConfig = {
       ...currentConfig,
       visible: false,
-      afterClose: () => {
-        if (typeof config.afterClose === 'function') {
-          config.afterClose();
+      onClose: () => {
+        if (typeof config.onClose === 'function') {
+          config.onClose();
         }
         destroy.apply(this, args);
       },

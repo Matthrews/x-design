@@ -32,8 +32,9 @@ const MaskDemo = () => {
         visible={visible}
         motionName="x-mask-fade"
         maskClick={handleMaskClick}
-        maskProps={{ children: maskContent }}
-      />
+      >
+        {maskContent}
+      </Mask>
     </div>
   );
 };

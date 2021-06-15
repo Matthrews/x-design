@@ -1,7 +1,3 @@
-import React, { useEffect, useCallback, useState, useMemo } from 'react';
-import classNames from 'classnames';
-import ReactDOM from 'react-dom';
-import { default as Button } from '../Button';
 import confirm, {
   withWarn,
   withInfo,

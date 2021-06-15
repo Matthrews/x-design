@@ -3,12 +3,12 @@
  * desc: 点击确定后异步关闭对话框，例如提交表单。
  */
 import { Modal, Button } from '@Matthrews/x-design';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const App = () => {
-  const [visible, setVisible] = React.useState(false);
-  const [confirmLoading, setConfirmLoading] = React.useState(false);
-  const [modalText, setModalText] = React.useState('Content of the modal');
+  const [visible, setVisible] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [modalText, setModalText] = useState('Content of the modal');
 
   const showModal = () => {
     setVisible(true);
@@ -20,11 +20,10 @@ const App = () => {
     setTimeout(() => {
       setVisible(false);
       setConfirmLoading(false);
-    }, 2000);
+    }, 20000);
   };
 
   const handleCancel = () => {
-    console.log('Clicked cancel button');
     setVisible(false);
   };
 

@@ -15,37 +15,29 @@ export interface CustomConfig {
 
 export interface MaskProps {
   /**
-   * prefix
-   */
-  prefixCls: string;
-  /**
    * 是否可见
    */
   visible: boolean;
+  /**
+   * 点击蒙层是否允许关闭
+   */
+  maskClosable?: boolean;
   /**
    * 动画名称
    */
   motionName?: string;
   /**
-   * style
-   */
-  style?: React.CSSProperties;
-  /**
    * maskProps
    */
   maskProps?: object;
   /**
-   * mask 点击事件
+   * 子元素
    */
-  maskClick?: () => {};
+  children?: React.ReactElement;
   /**
-   * 点击蒙层是否允许关闭
+   * 点击蒙层回调
    */
-  maskClosable: boolean;
-  /**
-   * 挂载DOM节点
-   */
-  getContainer?: () => HTMLElement | HTMLElement;
+  maskClick?: Function;
   /**
    * onClose
    */
@@ -54,21 +46,28 @@ export interface MaskProps {
    * 自定义配置
    */
   config?: CustomConfig;
+  /**
+   * prefix
+   */
+  prefixCls?: string;
+  /**
+   * style
+   */
+  style?: React.CSSProperties;
 }
 
-export default function Mask(props: MaskProps) {
-  const {
-    prefixCls: customizePrefixCls,
-    style,
-    visible,
-    maskProps = {},
-    motionName = 'x-mask-fade',
-    maskClick,
-    maskClosable = true,
-    config = {},
-    getContainer,
-    onClose,
-  } = props;
+export default ({
+  prefixCls: customizePrefixCls,
+  style,
+  visible,
+  maskProps = {},
+  motionName = 'x-mask-fade',
+  maskClick,
+  maskClosable = true,
+  config = {},
+  onClose,
+  children,
+}: MaskProps) => {
   const [show, setShow] = useState(visible);
   const [closable, setClosable] = useState(maskClosable);
   const prefixCls = getPrefixCls('mask', customizePrefixCls);
@@ -77,7 +76,7 @@ export default function Mask(props: MaskProps) {
 
   const { closeAfter, closeCallback } = config || {};
 
-  const [count, setCount] = useState((closeAfter || 0) / 1000);
+  const [count, setCount] = useState(Number(closeAfter) / 1000);
 
   // 组件卸载时清除计时器
   useEffect(() => {
@@ -138,18 +137,6 @@ export default function Mask(props: MaskProps) {
     }
   }, [closable]);
 
-  let container = getContainerDom(getContainer);
-
-  const { children, ...rest } = maskProps;
-  // console.log('getContainer', show, container, children);
-
-  if (show && children && container) {
-    // container.appendChild(children);
-    ReactDOM.render(children, container); // 计时关闭回有bug
-  }
-
-  // console.log('mask', show, count);
-
   let content = (
     <CSSMotion
       key="mask"
@@ -163,8 +150,7 @@ export default function Mask(props: MaskProps) {
             style={{ ...motionStyle, ...style }}
             className={classNames(`${prefixCls}`, motionClassName)}
             onClick={handleMaskClick}
-            {...(rest,
-            { children: container !== document.body ? null : children })}
+            {...{ ...maskProps, children: children ?? maskProps?.children }}
           />
         );
       }}
@@ -172,4 +158,4 @@ export default function Mask(props: MaskProps) {
   );
 
   return show ? ReactDOM.createPortal(content, document.body) : null;
-}
+};
