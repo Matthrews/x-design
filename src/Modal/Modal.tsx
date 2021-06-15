@@ -8,6 +8,7 @@ import React, {
 import classNames from 'classnames';
 import ReactDOM from 'react-dom';
 import { default as Button } from '@/Button';
+import { default as Mask } from '@/Mask';
 import { getPrefixCls, getParent as getContainerDom } from '@/_util';
 import { FocusTrap } from './FocusTrap';
 
@@ -151,15 +152,15 @@ const Modal = ({
     }
   }, [show]);
 
-  useEffect(() => {
-    if (modalRef) {
-      if (show) {
-        modalRef?.current?.focus();
-      } else {
-        modalRef?.current?.unfocus();
-      }
-    }
-  }, [show, modalRef]);
+  // useEffect(() => {
+  //   if (modalRef) {
+  //     if (show) {
+  //       modalRef?.current?.focus();
+  //     } else {
+  //       modalRef?.current?.unfocus();
+  //     }
+  //   }
+  // }, [show, modalRef]);
 
   const handleKeydown = (event: KeyboardEvent) => {
     if (event.keyCode === 27 || event.key === 'Escape ') {
@@ -233,10 +234,16 @@ const Modal = ({
 
     const mask = (
       <div className={classNames(prefixCls, className)}>
-        <div className={classNames(`${prefixCls}-mask`)}></div>
+        {/* <div className={classNames(`${prefixCls}-mask`)}></div> */}
+        <Mask
+          visible={show}
+          maskClick={() => {}}
+          onClose={() => {}}
+          style={{ backgroundColor: 'inherit' }}
+        />
         <div
           role="dialog"
-          ref={modalRef}
+          // ref={modalRef}
           className={classNames(`${prefixCls}-wrapper`)}
         >
           <FocusTrap container={modalRef} initialFocusRef={undefined} />
@@ -249,7 +256,13 @@ const Modal = ({
 
   const modal = (
     <div className={classNames(prefixCls, className)}>
-      <div className={classNames(`${prefixCls}-mask`)}></div>
+      {/* <div className={classNames(`${prefixCls}-mask`)}></div> */}
+      <Mask
+        visible={show}
+        maskClick={() => {}}
+        onClose={() => {}}
+        style={{ backgroundColor: 'inherit' }}
+      />
       <div
         role="dialog"
         ref={modalRef}

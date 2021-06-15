@@ -28,9 +28,8 @@ export default ({ identifier, export: expt }: IApiComponentProps) => {
     ? LOCALE_TEXTS['zh-CN']
     : LOCALE_TEXTS['en-US'];
 
-  const filterData = data[expt].filter(
-    ({ identifier }) => !OMITS.includes(identifier),
-  );
+  const filterData =
+    data[expt] ?? [].filter(({ identifier }) => !OMITS.includes(identifier));
 
   return (
     <>

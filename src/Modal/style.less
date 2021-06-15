@@ -13,10 +13,6 @@
   justify-content: center;
   align-items: center;
 
-  .@{prefix}-wrapper {
-    z-index: 1051;
-  }
-
   &-mask {
     position: fixed;
     top: 0;
@@ -69,6 +65,14 @@
     line-height: 22px;
     margin: 0;
   }
+}
+
+.@{prefix}-wrapper {
+  z-index: 1051;
+  // 解决滚动问题
+  max-height: calc(100% - 64px);
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .x-scrolling-effect {

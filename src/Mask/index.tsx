@@ -37,7 +37,7 @@ export interface MaskProps {
   /**
    * 点击蒙层回调
    */
-  maskClick?: () => {};
+  maskClick?: Function;
   /**
    * onClose
    */
