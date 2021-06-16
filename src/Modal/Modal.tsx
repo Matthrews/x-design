@@ -11,6 +11,7 @@ import { default as Button } from '@/Button';
 import { default as Mask } from '@/Mask';
 import { getPrefixCls, getParent as getContainerDom } from '@/_util';
 import { FocusTrap } from './FocusTrap';
+import { modalManager, useModalManager } from './modalManager';
 
 interface ConfirmProps {
   /**
@@ -112,6 +113,8 @@ const Modal = ({
 
   const modalRef = useRef(null);
 
+  useModalManager(modalRef, visible);
+
   useEffect(() => {
     setShow(visible);
   }, [visible]);
@@ -163,9 +166,11 @@ const Modal = ({
   // }, [show, modalRef]);
 
   const handleKeydown = (event: KeyboardEvent) => {
-    if (event.keyCode === 27 || event.key === 'Escape ') {
-      handleCancel();
+    // Only the last modal need to be escaped when pressing the esc key
+    if (event.key !== 'Escape' || !modalManager.isTopModal(modalRef)) {
+      return;
     }
+    handleCancel();
   };
 
   useEffect(() => {
@@ -243,7 +248,7 @@ const Modal = ({
         />
         <div
           role="dialog"
-          // ref={modalRef}
+          ref={modalRef}
           className={classNames(`${prefixCls}-wrapper`)}
         >
           <FocusTrap container={modalRef} initialFocusRef={undefined} />
