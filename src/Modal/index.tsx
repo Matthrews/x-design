@@ -16,10 +16,6 @@ export interface ModalFuncProps extends ModalProps {}
 
 export const destroyFns: Array<() => void> = [];
 
-function modalWarn(props: ModalFuncProps) {
-  return confirm(withWarn(props));
-}
-
 type ModalType = typeof OriginModal &
   ModalStaticFunctions & {
     destroyAll: () => void;
@@ -40,15 +36,17 @@ Modal.error = function errorFn(props: ModalFuncProps) {
   return confirm(withError(props));
 };
 
-Modal.warning = modalWarn;
-
-Modal.warn = modalWarn;
+Modal.warn = function modalWarn(props: ModalFuncProps) {
+  return confirm(withWarn(props));
+};
 
 Modal.confirm = function confirmFn(props: ModalFuncProps) {
   return confirm(withConfirm(props));
 };
 
 Modal.destroyAll = function destroyAllFn() {
+  console.log('destroyAll', destroyFns);
+
   while (destroyFns.length) {
     const close = destroyFns.pop();
     if (close) {

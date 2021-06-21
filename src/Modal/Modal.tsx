@@ -113,7 +113,7 @@ const Modal = ({
 
   const modalRef = useRef(null);
 
-  useModalManager(modalRef, visible);
+  // useModalManager(modalRef, visible);
 
   useEffect(() => {
     setShow(visible);
@@ -122,6 +122,7 @@ const Modal = ({
   const handleCloseModal = () => {
     setShow(false);
     if (typeof onClose === 'function') {
+      console.log('onClose', onClose);
       onClose();
     } else {
       if (typeof onCancel === 'function') {
@@ -134,15 +135,15 @@ const Modal = ({
     onOk?.(e);
   };
 
-  const handleCancel = () => {
-    setShow(false);
-    if (typeof onCancel === 'function') {
-      onCancel();
-    }
+  const handleCancel = (e?: React.SyntheticEvent) => {
+    console.log('handleCancel', onCancel);
+
+    onCancel?.(e);
   };
 
   useEffect(() => {
-    if (confirmLoading === false) {
+    if (show === true && confirmLoading === false) {
+      console.log('confirmLoading');
       setShow(false);
     }
   }, [confirmLoading]);
@@ -155,39 +156,30 @@ const Modal = ({
     }
   }, [show]);
 
-  // useEffect(() => {
-  //   if (modalRef) {
-  //     if (show) {
-  //       modalRef?.current?.focus();
-  //     } else {
-  //       modalRef?.current?.unfocus();
-  //     }
+  // const handleKeydown = (event: KeyboardEvent) => {
+  //   // Only the last modal need to be escaped when pressing the esc key
+  //   if (event.key !== 'Escape' || !modalManager.isTopModal(modalRef)) {
+  //     return;
   //   }
-  // }, [show, modalRef]);
+  //   console.log('event', event.key);
+  //   handleCancel();
+  // };
 
-  const handleKeydown = (event: KeyboardEvent) => {
-    // Only the last modal need to be escaped when pressing the esc key
-    if (event.key !== 'Escape' || !modalManager.isTopModal(modalRef)) {
-      return;
-    }
-    handleCancel();
-  };
+  // useEffect(() => {
+  //   if (show) {
+  //     document.addEventListener('keydown', handleKeydown);
+  //   }
+  //   return () => {
+  //     document.removeEventListener('keydown', handleKeydown);
+  //   };
+  // }, [show]);
 
-  useEffect(() => {
-    if (show) {
-      document.addEventListener('keydown', handleKeydown);
-    }
-    return () => {
-      document.removeEventListener('keydown', handleKeydown);
-    };
-  }, [show]);
+  // console.log('inner', show, visible, confirmLoading);
 
   const titleClose = useMemo(() => {
     return !type ? (
       <Button type="text" onClick={handleCloseModal}>
-        <span tabIndex={999} className={classNames(`${prefixCls}-close-x`)}>
-          ×
-        </span>
+        <span className={classNames(`${prefixCls}-close-x`)}>×</span>
       </Button>
     ) : null;
   }, [type]);
@@ -224,6 +216,8 @@ const Modal = ({
     </div>
   );
 
+  console.log('customFooter', show, visible);
+
   const container = getContainerDom(getContainer);
 
   if (container && container !== document.body) {
@@ -239,13 +233,13 @@ const Modal = ({
 
     const mask = (
       <div className={classNames(prefixCls, className)}>
-        {/* <div className={classNames(`${prefixCls}-mask`)}></div> */}
-        <Mask
-          visible={show}
-          maskClick={() => {}}
-          onClose={() => {}}
-          style={{ backgroundColor: 'inherit' }}
-        />
+        <div className={classNames(`${prefixCls}-mask`)}></div>
+        {/* <Mask */}
+        {/* visible={show} */}
+        {/* maskClick={() => {}} */}
+        {/* onClose={() => {}} */}
+        {/* style={{ backgroundColor: 'inherit' }} */}
+        {/* /> */}
         <div
           role="dialog"
           ref={modalRef}

@@ -104,12 +104,11 @@ export default ({
   }, [show, count]);
 
   useEffect(() => {
-    return onClose?.();
+    onClose?.();
   }, []);
 
   useEffect(() => {
     setShow(visible);
-    return () => {};
   }, [visible]);
 
   useEffect(() => {
@@ -136,6 +135,8 @@ export default ({
       }
     }
   }, [closable]);
+
+  // console.log('inner', show, visible);
 
   let content = (
     <CSSMotion

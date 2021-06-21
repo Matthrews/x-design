@@ -34,6 +34,7 @@ const MaskDemo = () => {
         }, 1000);
       } else if (count === 0) {
         console.log('outter over');
+        setCount(10);
         setVisible(false);
         clearInterval(intervalRef.current);
       }
@@ -55,6 +56,8 @@ const MaskDemo = () => {
     ),
     [count],
   );
+
+  console.log('count', count);
 
   return (
     <div>
