@@ -137,7 +137,7 @@ const Modal = ({
 
   const handleCancel = (e?: React.SyntheticEvent) => {
     console.log('handleCancel', onCancel);
-
+    setShow(false);
     onCancel?.(e);
   };
 
@@ -216,46 +216,11 @@ const Modal = ({
     </div>
   );
 
-  console.log('customFooter', show, visible);
+  // console.log('customFooter', show, visible);
 
   const container = getContainerDom(getContainer);
-
-  if (container && container !== document.body) {
-    // let content = (
-    //   <div className={classNames(prefixCls, className)}>
-    //     <div className={classNames(`${prefixCls}-wrapper`)}>{modalContent}</div>
-    //   </div>
-    // );
-    // ReactDOM.createPortal('content', container);
-    // console.log('getContainerDom', container);
-
-    // TODO 能否实现mask挂载在最外面，而content挂载在里面
-
-    const mask = (
-      <div className={classNames(prefixCls, className)}>
-        <div className={classNames(`${prefixCls}-mask`)}></div>
-        {/* <Mask */}
-        {/* visible={show} */}
-        {/* maskClick={() => {}} */}
-        {/* onClose={() => {}} */}
-        {/* style={{ backgroundColor: 'inherit' }} */}
-        {/* /> */}
-        <div
-          role="dialog"
-          ref={modalRef}
-          className={classNames(`${prefixCls}-wrapper`)}
-        >
-          <FocusTrap container={modalRef} initialFocusRef={undefined} />
-          {modalContent}
-        </div>
-      </div>
-    );
-    return show && ReactDOM.createPortal(mask, container);
-  }
-
   const modal = (
     <div className={classNames(prefixCls, className)}>
-      {/* <div className={classNames(`${prefixCls}-mask`)}></div> */}
       <Mask
         visible={show}
         maskClick={() => {}}
@@ -273,7 +238,7 @@ const Modal = ({
     </div>
   );
 
-  return show && ReactDOM.createPortal(modal, document.body);
+  return show && ReactDOM.createPortal(modal, container);
 };
 
 export default Modal;

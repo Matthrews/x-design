@@ -20,8 +20,11 @@ function countDown() {
   }, 1000);
   setTimeout(() => {
     clearInterval(timer);
+    console.log('destroy......', modal);
     modal.destroy();
   }, secondsToGo * 1000);
+
+  console.log('secondsToGo', secondsToGo);
 }
 
 export default () => (
