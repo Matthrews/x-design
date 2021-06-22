@@ -28,8 +28,6 @@ export const modalManager = {
     !!modals.length && modals[modals.length - 1] === modal,
 };
 
-console.log('modals', modals);
-
 export function useModalManager(ref: Ref<Element>, open: boolean) {
   useEffect(() => {
     if (open) {

@@ -25,7 +25,6 @@ export default ({
   const handleCloseModal = () => {
     setShow(false);
     if (typeof onClose === 'function') {
-      console.log('onClose', onClose);
       onClose();
     } else {
       if (typeof onCancel === 'function') {
@@ -36,7 +35,6 @@ export default ({
 
   useEffect(() => {
     if (visible === false && typeof onClose === 'function') {
-      console.log('onClose......');
       onClose?.();
     }
   }, [visible]);
@@ -50,7 +48,6 @@ export default ({
   };
 
   const handleCancel = (e?: React.SyntheticEvent) => {
-    console.log('handleCancel', onCancel, onClose);
     setShow(false);
     onCancel?.(e);
     onClose?.();
@@ -98,8 +95,6 @@ export default ({
       </div>
     </div>
   );
-
-  console.log('content', show, visible);
 
   return (
     <div className={classNames(prefixCls, className)}>

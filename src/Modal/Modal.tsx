@@ -1,6 +1,5 @@
 import React, {
   useEffect,
-  useCallback,
   useState,
   useMemo,
   useRef,
@@ -115,9 +114,10 @@ export interface ModalProps
    * 子结点
    */
   children?: React.ReactNode;
+  okCancel?: boolean;
 }
 
-const Modal = ({
+const Modal: any = ({
   prefixCls: customizePrefixCls,
   className,
   title,
@@ -150,7 +150,6 @@ const Modal = ({
   const handleCloseModal = () => {
     setShow(false);
     if (typeof onClose === 'function') {
-      console.log('onClose', onClose);
       onClose();
     } else {
       if (typeof onCancel === 'function') {
@@ -164,14 +163,12 @@ const Modal = ({
   };
 
   const handleCancel = (e?: React.SyntheticEvent) => {
-    console.log('handleCancel', onCancel);
     setShow(false);
     onCancel?.(e);
   };
 
   useEffect(() => {
     if (show === true && confirmLoading === false) {
-      console.log('confirmLoading');
       setShow(false);
     }
   }, [confirmLoading]);
@@ -189,7 +186,6 @@ const Modal = ({
     if (event.key !== 'Escape' || !modalManager.isTopModal(modalRef)) {
       return;
     }
-    console.log('event', event.key);
     handleCancel();
   };
 
@@ -201,8 +197,6 @@ const Modal = ({
       document.removeEventListener('keydown', handleKeydown);
     };
   }, [show]);
-
-  // console.log('inner', show, visible, confirmLoading);
 
   const titleClose = useMemo(() => {
     return !type ? (
@@ -244,8 +238,6 @@ const Modal = ({
     </div>
   );
 
-  // console.log('customFooter', show, visible);
-
   const container = getContainerDom(getContainer);
   const modal = (
     <div className={classNames(prefixCls, className)}>
@@ -266,7 +258,7 @@ const Modal = ({
     </div>
   );
 
-  return show && ReactDOM.createPortal(modal, container);
+  return show ? ReactDOM.createPortal(modal, container) : null;
 };
 
 export default Modal;

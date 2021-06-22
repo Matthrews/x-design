@@ -25,8 +25,6 @@ export type ModalStaticFunctions = Record<
 >;
 
 export default function confirm(config: ModalFuncProps) {
-  console.log('confirm', config);
-
   const div = document.createElement('div');
   document.body.appendChild(div);
   // eslint-disable-next-line @typescript-eslint/no-use-before-define
@@ -34,8 +32,6 @@ export default function confirm(config: ModalFuncProps) {
 
   function destroy(...args: any[]) {
     const unmountResult = ReactDOM.unmountComponentAtNode(div);
-    console.log('destory', args, unmountResult);
-
     if (unmountResult && div.parentNode) {
       div.parentNode.removeChild(div);
     }
@@ -69,8 +65,6 @@ export default function confirm(config: ModalFuncProps) {
       const rootPrefixCls = getPrefixCls(undefined, getRootPrefixCls());
       const prefixCls = customizePrefixCls || `${rootPrefixCls}-modal`;
 
-      console.log('render', props);
-
       ReactDOM.render(
         <Content
           {...props}
@@ -95,8 +89,6 @@ export default function confirm(config: ModalFuncProps) {
         destroy.apply(this, args);
       },
     };
-    console.log('close', currentConfig);
-
     render(currentConfig);
   }
 
@@ -172,10 +164,5 @@ export function modalGlobalConfig({
 }: {
   rootPrefixCls: string;
 }) {
-  //   devWarning(
-  //     false,
-  //     'Modal',
-  //     'Modal.config is deprecated. Please use ConfigProvider.config instead.',
-  //   );
   defaultRootPrefixCls = rootPrefixCls;
 }

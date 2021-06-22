@@ -29,7 +29,7 @@ export interface MaskProps {
   /**
    * maskProps
    */
-  maskProps?: object;
+  maskProps?: object & { children: React.ReactNode };
   /**
    * 子元素
    */
@@ -60,7 +60,7 @@ export default ({
   prefixCls: customizePrefixCls,
   style,
   visible,
-  maskProps = {},
+  maskProps,
   motionName = 'x-mask-fade',
   maskClick,
   maskClosable = true,
@@ -135,8 +135,6 @@ export default ({
       }
     }
   }, [closable]);
-
-  // console.log('inner', show, visible);
 
   let content = (
     <CSSMotion
