@@ -136,8 +136,6 @@ export default ({
     }
   }, [closable]);
 
-  // console.log('inner', show, visible);
-
   let content = (
     <CSSMotion
       key="mask"

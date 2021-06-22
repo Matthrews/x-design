@@ -150,7 +150,6 @@ const Modal = ({
   const handleCloseModal = () => {
     setShow(false);
     if (typeof onClose === 'function') {
-      console.log('onClose', onClose);
       onClose();
     } else {
       if (typeof onCancel === 'function') {
@@ -164,14 +163,12 @@ const Modal = ({
   };
 
   const handleCancel = (e?: React.SyntheticEvent) => {
-    console.log('handleCancel', onCancel);
     setShow(false);
     onCancel?.(e);
   };
 
   useEffect(() => {
     if (show === true && confirmLoading === false) {
-      console.log('confirmLoading');
       setShow(false);
     }
   }, [confirmLoading]);
@@ -201,8 +198,6 @@ const Modal = ({
       document.removeEventListener('keydown', handleKeydown);
     };
   }, [show]);
-
-  // console.log('inner', show, visible, confirmLoading);
 
   const titleClose = useMemo(() => {
     return !type ? (
@@ -243,8 +238,6 @@ const Modal = ({
       </div>
     </div>
   );
-
-  // console.log('customFooter', show, visible);
 
   const container = getContainerDom(getContainer);
   const modal = (

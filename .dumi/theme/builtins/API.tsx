@@ -31,7 +31,6 @@ export default ({ identifier, export: expt }: IApiComponentProps) => {
   const filterData = (data[expt] ?? []).filter(
     ({ identifier }) => !OMITS.includes(identifier),
   );
-
   return (
     <>
       {data && (
