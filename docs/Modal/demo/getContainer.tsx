@@ -1,5 +1,4 @@
 /**
- * title: Modal
  * desc: 自定义节点挂载位置
  */
 
@@ -22,7 +21,10 @@ const ModalDemo = () => {
   return (
     <div>
       <Button onClick={handleClick}>自定义节点挂载位置</Button>
-      <div style={{ backgroundColor: 'red', height: 22 }} ref={divRef}>
+      <div
+        style={{ backgroundColor: 'red', height: 22, display: 'inline-block' }}
+        ref={divRef}
+      >
         挂载到这里
       </div>
       <Modal

@@ -1,6 +1,5 @@
 /**
- * title: 基本
- * desc: 第一个对话框。
+ * desc: 基本对话框。
  */
 
 import React, { useCallback, useState } from 'react';

@@ -1,5 +1,4 @@
 /**
- * title: Modal
  * desc: 多个内嵌Modal
  */
 import React from 'react';

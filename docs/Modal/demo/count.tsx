@@ -1,6 +1,5 @@
 /**
- * title: Modal
- * desc: 定时关闭
+ * desc: 定时自动关闭Modal
  */
 
 import React, { useCallback, useState } from 'react';
@@ -27,6 +26,4 @@ function countDown() {
   console.log('secondsToGo', secondsToGo);
 }
 
-export default () => (
-  <Button onClick={countDown}>Open modal to close in 5s</Button>
-);
+export default () => <Button onClick={countDown}>5s后自动关闭Modal</Button>;
