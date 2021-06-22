@@ -22,22 +22,7 @@
 
 <code src="./demo/multiple.tsx">
 
+<code src="./demo/fullScreen.tsx">
+
 <API src="../../src/Modal/Modal.tsx"></API>
 
-### 需求
-
-#### 基本对话框
-
-#### 异步关闭
-
-#### 自定义 footer
-
-#### 对话框
-
-#### 信息提示
-
-#### 定时关闭
-
-#### 自定义位置
-
-#### 位置可拖拽

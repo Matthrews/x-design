@@ -1,4 +1,4 @@
-# Mask 遮罩
+# Mask
 
 ## 何时使用
 
@@ -8,8 +8,8 @@
 
 <code src="./demo/basic">
 
-<code src="./demo/counter">
+<code src="./demo/update">
 
-<code src="./demo/innerCounter">
+<code src="./demo/innerUpdate">
 
 <API src="../../src/Mask/index.tsx"></API>

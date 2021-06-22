@@ -1,5 +1,5 @@
 /**
- * desc: 基本对话框。
+ * desc: 全屏Modal
  */
 
 import React, { useCallback, useState } from 'react';
@@ -17,10 +17,11 @@ const ModalDemo = () => {
 
   return (
     <div>
-      <Button onClick={handleClick}>打开Modal</Button>
+      <Button onClick={handleClick}>全屏Modal</Button>
       <Modal
-        title="Basic Modal"
+        title="FullScreen Modal"
         visible={visible}
+        wrapperStyle={{ height: '100%', width: '100%' }}
         onClose={handleClose}
         onOk={handleClose}
         onCancel={handleClose}

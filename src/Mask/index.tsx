@@ -104,12 +104,11 @@ export default ({
   }, [show, count]);
 
   useEffect(() => {
-    return onClose?.();
+    onClose?.();
   }, []);
 
   useEffect(() => {
     setShow(visible);
-    return () => {};
   }, [visible]);
 
   useEffect(() => {

@@ -4,6 +4,7 @@ import React, {
   useState,
   useMemo,
   useRef,
+  CSSProperties,
 } from 'react';
 import classNames from 'classnames';
 import ReactDOM from 'react-dom';
@@ -11,6 +12,7 @@ import { default as Button } from '@/Button';
 import { default as Mask } from '@/Mask';
 import { getPrefixCls, getParent as getContainerDom } from '@/_util';
 import { FocusTrap } from './FocusTrap';
+import { modalManager, useModalManager } from './modalManager';
 
 interface ConfirmProps {
   /**
@@ -69,7 +71,30 @@ interface CLoseProps {
   onClose?: () => void;
 }
 
-export interface ModalProps extends ConfirmProps, FooterProps, CLoseProps {
+interface StyleProps {
+  /**
+   * 包裹样式
+   */
+  wrapperStyle?: CSSProperties;
+  /**
+   * header样式
+   */
+  headerStyle?: CSSProperties;
+  /**
+   * body样式
+   */
+  bodyStyle?: CSSProperties;
+  /**
+   * footer样式
+   */
+  footerStyle?: CSSProperties;
+}
+
+export interface ModalProps
+  extends ConfirmProps,
+    FooterProps,
+    CLoseProps,
+    StyleProps {
   /**
    * 是否可见
    */
@@ -106,11 +131,17 @@ const Modal = ({
   onClose,
   onOk,
   onCancel,
+  wrapperStyle,
+  headerStyle,
+  bodyStyle,
+  footerStyle,
 }: ModalProps) => {
   const [show, setShow] = useState(visible);
   const prefixCls = getPrefixCls('modal', customizePrefixCls);
 
   const modalRef = useRef(null);
+
+  useModalManager(modalRef, visible);
 
   useEffect(() => {
     setShow(visible);
@@ -131,15 +162,13 @@ const Modal = ({
     onOk?.(e);
   };
 
-  const handleCancel = () => {
+  const handleCancel = (e?: React.SyntheticEvent) => {
     setShow(false);
-    if (typeof onCancel === 'function') {
-      onCancel();
-    }
+    onCancel?.(e);
   };
 
   useEffect(() => {
-    if (confirmLoading === false) {
+    if (show === true && confirmLoading === false) {
       setShow(false);
     }
   }, [confirmLoading]);
@@ -152,20 +181,13 @@ const Modal = ({
     }
   }, [show]);
 
-  // useEffect(() => {
-  //   if (modalRef) {
-  //     if (show) {
-  //       modalRef?.current?.focus();
-  //     } else {
-  //       modalRef?.current?.unfocus();
-  //     }
-  //   }
-  // }, [show, modalRef]);
-
   const handleKeydown = (event: KeyboardEvent) => {
-    if (event.keyCode === 27 || event.key === 'Escape ') {
-      handleCancel();
+    // Only the last modal need to be escaped when pressing the esc key
+    if (event.key !== 'Escape' || !modalManager.isTopModal(modalRef)) {
+      return;
     }
+    console.log('event', event.key);
+    handleCancel();
   };
 
   useEffect(() => {
@@ -180,9 +202,7 @@ const Modal = ({
   const titleClose = useMemo(() => {
     return !type ? (
       <Button type="text" onClick={handleCloseModal}>
-        <span tabIndex={999} className={classNames(`${prefixCls}-close-x`)}>
-          ×
-        </span>
+        <span className={classNames(`${prefixCls}-close-x`)}>×</span>
       </Button>
     ) : null;
   }, [type]);
@@ -205,58 +225,23 @@ const Modal = ({
   }, [type]);
 
   const modalContent = (
-    <div className={classNames(`${prefixCls}-content`)}>
-      <div className={classNames(`${prefixCls}-header`)}>
+    <div className={classNames(`${prefixCls}-content`)} style={wrapperStyle}>
+      <div className={classNames(`${prefixCls}-header`)} style={headerStyle}>
         <div className={classNames(`${prefixCls}-title`)}>{title}</div>
         {titleClose}
       </div>
-      <div className={classNames(`${prefixCls}-body`)}>
+      <div className={classNames(`${prefixCls}-body`)} style={bodyStyle}>
         {type ? content : children}
       </div>
-      <div className={classNames(`${prefixCls}-footer`)}>
+      <div className={classNames(`${prefixCls}-footer`)} style={footerStyle}>
         {customFooter ?? footer}
       </div>
     </div>
   );
 
   const container = getContainerDom(getContainer);
-
-  if (container && container !== document.body) {
-    // let content = (
-    //   <div className={classNames(prefixCls, className)}>
-    //     <div className={classNames(`${prefixCls}-wrapper`)}>{modalContent}</div>
-    //   </div>
-    // );
-    // ReactDOM.createPortal('content', container);
-    // console.log('getContainerDom', container);
-
-    // TODO 能否实现mask挂载在最外面，而content挂载在里面
-
-    const mask = (
-      <div className={classNames(prefixCls, className)}>
-        {/* <div className={classNames(`${prefixCls}-mask`)}></div> */}
-        <Mask
-          visible={show}
-          maskClick={() => {}}
-          onClose={() => {}}
-          style={{ backgroundColor: 'inherit' }}
-        />
-        <div
-          role="dialog"
-          // ref={modalRef}
-          className={classNames(`${prefixCls}-wrapper`)}
-        >
-          <FocusTrap container={modalRef} initialFocusRef={undefined} />
-          {modalContent}
-        </div>
-      </div>
-    );
-    return show && ReactDOM.createPortal(mask, container);
-  }
-
   const modal = (
     <div className={classNames(prefixCls, className)}>
-      {/* <div className={classNames(`${prefixCls}-mask`)}></div> */}
       <Mask
         visible={show}
         maskClick={() => {}}
@@ -274,7 +259,7 @@ const Modal = ({
     </div>
   );
 
-  return show && ReactDOM.createPortal(modal, document.body);
+  return show && ReactDOM.createPortal(modal, container);
 };
 
 export default Modal;

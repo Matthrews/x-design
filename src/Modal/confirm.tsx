@@ -1,6 +1,7 @@
 import { getPrefixCls } from '@/_util';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import Content from './Content';
 import Modal, { ModalFuncProps, destroyFns } from './index';
 
 let defaultRootPrefixCls = '';
@@ -24,6 +25,8 @@ export type ModalStaticFunctions = Record<
 >;
 
 export default function confirm(config: ModalFuncProps) {
+  console.log('confirm', config);
+
   const div = document.createElement('div');
   document.body.appendChild(div);
   // eslint-disable-next-line @typescript-eslint/no-use-before-define
@@ -31,6 +34,8 @@ export default function confirm(config: ModalFuncProps) {
 
   function destroy(...args: any[]) {
     const unmountResult = ReactDOM.unmountComponentAtNode(div);
+    console.log('destory', args, unmountResult);
+
     if (unmountResult && div.parentNode) {
       div.parentNode.removeChild(div);
     }
@@ -60,13 +65,14 @@ export default function confirm(config: ModalFuncProps) {
      * Sync render blocks React event. Let's make this async.
      */
     setTimeout(() => {
-      //   const { getPrefixCls } = globalConfig();
       // because Modal.config  set rootPrefixCls, which is different from other components
       const rootPrefixCls = getPrefixCls(undefined, getRootPrefixCls());
       const prefixCls = customizePrefixCls || `${rootPrefixCls}-modal`;
 
+      console.log('render', props);
+
       ReactDOM.render(
-        <Modal
+        <Content
           {...props}
           prefixCls={prefixCls}
           rootPrefixCls={rootPrefixCls}
@@ -89,6 +95,8 @@ export default function confirm(config: ModalFuncProps) {
         destroy.apply(this, args);
       },
     };
+    console.log('close', currentConfig);
+
     render(currentConfig);
   }
 

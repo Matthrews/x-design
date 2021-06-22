@@ -1,6 +1,5 @@
 /**
- * title: Modal
- * desc: 自定义页脚
+ * desc: 自定义Modal页脚
  */
 import { Modal, Button } from '@Matthrews/x-design';
 import React from 'react';
@@ -33,7 +32,7 @@ class App extends React.Component {
     return (
       <>
         <Button type="primary" onClick={this.showModal}>
-          Open Modal with customized footer
+          自定义Modal页脚
         </Button>
         <Modal
           visible={visible}
