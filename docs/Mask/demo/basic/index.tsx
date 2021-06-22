@@ -1,5 +1,4 @@
 /**
- * title: Mask
  * desc: 基本Mask。
  */
 

@@ -25,6 +25,7 @@ type ModalType = typeof OriginModal &
 const Modal = OriginModal as ModalType;
 
 Modal.info = function infoFn(props: ModalFuncProps) {
+  console.log('infoFn', props);
   return confirm(withInfo(props));
 };
 

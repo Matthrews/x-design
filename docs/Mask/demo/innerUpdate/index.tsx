@@ -1,6 +1,5 @@
 /**
- * title: 定时关闭
- * desc: 让组件库处理定时任务
+ * desc: 使用Hook API处理定时任务
  */
 
 import React, { useState } from 'react';

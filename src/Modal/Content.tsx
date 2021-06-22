@@ -18,6 +18,7 @@ export default ({
   onClose,
   onOk,
   onCancel,
+  okCancel,
 }: ModalProps) => {
   const [show, setShow] = useState(visible);
   const prefixCls = getPrefixCls('modal', customizePrefixCls);
@@ -53,6 +54,9 @@ export default ({
     setShow(false);
     onCancel?.(e);
     onClose?.();
+    if (okCancel === false && onOk) {
+      onOk?.();
+    }
   };
 
   const titleClose = useMemo(() => {

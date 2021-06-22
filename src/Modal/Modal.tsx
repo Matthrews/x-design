@@ -4,6 +4,7 @@ import React, {
   useState,
   useMemo,
   useRef,
+  CSSProperties,
 } from 'react';
 import classNames from 'classnames';
 import ReactDOM from 'react-dom';
@@ -70,7 +71,30 @@ interface CLoseProps {
   onClose?: () => void;
 }
 
-export interface ModalProps extends ConfirmProps, FooterProps, CLoseProps {
+interface StyleProps {
+  /**
+   * 包裹样式
+   */
+  wrapperStyle?: CSSProperties;
+  /**
+   * header样式
+   */
+  headerStyle?: CSSProperties;
+  /**
+   * body样式
+   */
+  bodyStyle?: CSSProperties;
+  /**
+   * footer样式
+   */
+  footerStyle?: CSSProperties;
+}
+
+export interface ModalProps
+  extends ConfirmProps,
+    FooterProps,
+    CLoseProps,
+    StyleProps {
   /**
    * 是否可见
    */
@@ -107,13 +131,17 @@ const Modal = ({
   onClose,
   onOk,
   onCancel,
+  wrapperStyle,
+  headerStyle,
+  bodyStyle,
+  footerStyle,
 }: ModalProps) => {
   const [show, setShow] = useState(visible);
   const prefixCls = getPrefixCls('modal', customizePrefixCls);
 
   const modalRef = useRef(null);
 
-  // useModalManager(modalRef, visible);
+  useModalManager(modalRef, visible);
 
   useEffect(() => {
     setShow(visible);
@@ -156,23 +184,23 @@ const Modal = ({
     }
   }, [show]);
 
-  // const handleKeydown = (event: KeyboardEvent) => {
-  //   // Only the last modal need to be escaped when pressing the esc key
-  //   if (event.key !== 'Escape' || !modalManager.isTopModal(modalRef)) {
-  //     return;
-  //   }
-  //   console.log('event', event.key);
-  //   handleCancel();
-  // };
+  const handleKeydown = (event: KeyboardEvent) => {
+    // Only the last modal need to be escaped when pressing the esc key
+    if (event.key !== 'Escape' || !modalManager.isTopModal(modalRef)) {
+      return;
+    }
+    console.log('event', event.key);
+    handleCancel();
+  };
 
-  // useEffect(() => {
-  //   if (show) {
-  //     document.addEventListener('keydown', handleKeydown);
-  //   }
-  //   return () => {
-  //     document.removeEventListener('keydown', handleKeydown);
-  //   };
-  // }, [show]);
+  useEffect(() => {
+    if (show) {
+      document.addEventListener('keydown', handleKeydown);
+    }
+    return () => {
+      document.removeEventListener('keydown', handleKeydown);
+    };
+  }, [show]);
 
   // console.log('inner', show, visible, confirmLoading);
 
@@ -202,15 +230,15 @@ const Modal = ({
   }, [type]);
 
   const modalContent = (
-    <div className={classNames(`${prefixCls}-content`)}>
-      <div className={classNames(`${prefixCls}-header`)}>
+    <div className={classNames(`${prefixCls}-content`)} style={wrapperStyle}>
+      <div className={classNames(`${prefixCls}-header`)} style={headerStyle}>
         <div className={classNames(`${prefixCls}-title`)}>{title}</div>
         {titleClose}
       </div>
-      <div className={classNames(`${prefixCls}-body`)}>
+      <div className={classNames(`${prefixCls}-body`)} style={bodyStyle}>
         {type ? content : children}
       </div>
-      <div className={classNames(`${prefixCls}-footer`)}>
+      <div className={classNames(`${prefixCls}-footer`)} style={footerStyle}>
         {customFooter ?? footer}
       </div>
     </div>

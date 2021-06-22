@@ -1,6 +1,5 @@
 /**
- * title: 定时关闭
- * desc: 外部设置定时器
+ * desc: 外部定时更新
  */
 
 import React, {

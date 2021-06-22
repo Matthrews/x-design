@@ -2,7 +2,7 @@
  * desc: 点击确定后异步关闭对话框，例如提交表单。
  */
 import { Modal, Button } from '@Matthrews/x-design';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 const App = () => {
   const [visible, setVisible] = useState(false);

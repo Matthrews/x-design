@@ -25,6 +25,8 @@ export type ModalStaticFunctions = Record<
 >;
 
 export default function confirm(config: ModalFuncProps) {
+  console.log('confirm', config);
+
   const div = document.createElement('div');
   document.body.appendChild(div);
   // eslint-disable-next-line @typescript-eslint/no-use-before-define

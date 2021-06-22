@@ -1,4 +1,4 @@
-## Modal 对话框
+## Modal
 
 ## 何时使用
 
@@ -21,5 +21,7 @@
 <code src="./demo/getContainer.tsx">
 
 <code src="./demo/multiple.tsx">
+
+<code src="./demo/fullScreen.tsx">
 
 <API src="../../src/Modal/Modal.tsx"></API>

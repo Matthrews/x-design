@@ -12,5 +12,8 @@ export default defineConfig({
   ],
   // mode: 'site',
   publicPath: './',
+  webpack5: {
+    lazyCompilation: {},
+  },
   // more config: https://d.umijs.org/config
 });
