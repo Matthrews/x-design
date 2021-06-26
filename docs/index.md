@@ -8,11 +8,31 @@
 
 ## 参考
 
-- https://material-ui.com/zh/components/dialogs/
-- https://react-responsive-modal.leopradel.com/
-- https://ant.design/components/modal-cn/#components-modal-demo-position
-- https://element.eleme.cn/#/zh-CN/component/dialog
-- http://fish-docs.sdp.101.com/
+- 阿里
+
+  - [Ant Design](https://ant.design/index-cn)
+  - [Fusion Design](https://fusion.design/pc/component)
+
+- Netease
+
+  - [Fish Design](https://nsfi.github.io/ppfish-components)
+
+- 饿了么
+
+  - [Element UI](https://element-plus.gitee.io)
+
+- Goole
+
+  - [Material Design](https://material-ui.com)
+
+- 其他
+  - [以网易 FishDesign 为例：企业级 UI 组件库的设计方法与实践](http://www.woshipm.com/pd/3030168.html)
+  - [B 端业务与 C 端的 4 个区别](http://www.woshipm.com/it/4438434.html)
+  - [移动端组件库盘点](https://www.bilibili.com/read/cv6257291/)
+  - [最全 Web 端 UI 组件库详解](https://zhuanlan.zhihu.com/p/141734324)
+  - [设计师值得收藏的 8 个 Web 端组件库](https://www.jianshu.com/p/d34069292682)
+  - https://react-responsive-modal.leopradel.com/
+  - http://fish-docs.sdp.101.com/
 
 ## 阶段性设计原则
 

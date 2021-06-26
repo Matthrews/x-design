@@ -26,4 +26,4 @@ function countDown() {
   console.log('secondsToGo', secondsToGo);
 }
 
-export default () => <Button onClick={countDown}>5s后自动关闭Modal</Button>;
+export default () => <Button onClick={countDown}>5秒后自动关闭Modal</Button>;

@@ -1,0 +1,88 @@
+
+.x-design {
+  &-animate__zoomIn {
+    animation: zoomIn 0.5s 0.2s ease both;
+  }
+
+  &-animate__fadeIn {
+    animation: fadeIn 0.5s 0.2s ease both;
+  }
+
+  &-animate__slideUp {
+    animation: slideUp 0.5s 0.2s ease both;
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+    visibility: visible;
+  }
+
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes toast-open {
+  from {
+    opacity: 0;
+    -webkit-transform: translate(0, -50px);
+    transform: translate(0, -50px);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes toast-close {
+  from {
+    opacity: 1;
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: translate(0, -50px);
+    transform: translate(0, -50px);
+  }
+}
+
+@keyframes rotate {
+  from {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}

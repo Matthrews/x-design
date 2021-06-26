@@ -1,0 +1,16 @@
+.clearfix() {
+  &::before,
+  &::after {
+    clear: both;
+    content: '';
+    display: table;
+    zoom: 1;
+  }
+}
+
+.flex-center(@justify: center, @align: center, @direction: row) {
+  display: flex;
+  justify-content: @justify;
+  align-items: @align;
+  flex-direction: @direction;
+}

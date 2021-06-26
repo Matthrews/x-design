@@ -1,4 +1,6 @@
-@prefix: x-btn;
+@import '../style/index.less';
+
+@prefix: ~'@{root-prefix}-btn';
 
 .@{prefix},
 .@{prefix}:active,
@@ -7,24 +9,32 @@
 }
 
 .@{prefix} {
-  background: #fff;
-  border: 1px solid #d9d9d9;
-  border-radius: 2px;
-  font-size: 14px;
+  background: @color-white-bg;
+  font-size: @font-size-base;
   font-weight: 400;
-  height: 32px;
-  line-height: 26px;
+  color: @color-primary;
+  height: 36px;
+  line-height: 20px;
+  border-radius: 24px;
+  border: 1px solid @color-primary;
   cursor: pointer;
   padding: 4px 15px;
   text-align: center;
   white-space: nowrap;
   box-shadow: 0 2px 0 rgb(0 0 0 / 2%);
   transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  &:hover {
+    background-color: #ff5b5e;
+  }
+
+  &:active {
+    background-color: #da232f;
+  }
 }
 
 .@{prefix}-primary {
-  background: #1890ff;
-  border-color: #1890ff;
+  background: @color-primary;
+  border: 1px solid @color-primary;
   box-shadow: 0 2px 0 rgb(0 0 0 / 5%);
   color: #fff;
   text-shadow: 0 -1px 0 rgb(0 0 0 / 12%);
@@ -39,10 +49,10 @@
 }
 
 .@{prefix}-link {
-  background: #fff;
+  background: @color-white-bg;
   border: none;
   border-color: transparent;
-  color: #1890ff;
+  color: @color-primary;
   text-shadow: none;
 }
 
@@ -54,7 +64,7 @@
   left: -1px;
   z-index: 1;
   display: none;
-  background: #fff;
+  background: @color-white-bg;
   border-radius: inherit;
   opacity: 0.35;
   transition: opacity 0.2s;
