@@ -27,6 +27,7 @@ type ModalType = typeof OriginModal &
 const Modal = OriginModal as ModalType;
 
 Modal.info = function infoFn(props: ModalFuncProps) {
+  console.log('infoFn', props);
   return confirm(withInfo(props));
 };
 
@@ -47,6 +48,8 @@ Modal.confirm = function confirmFn(props: ModalFuncProps) {
 };
 
 Modal.destroyAll = function destroyAllFn() {
+  console.log('destroyAll', destroyFns);
+
   while (destroyFns.length) {
     const close = destroyFns.pop();
     if (close) {

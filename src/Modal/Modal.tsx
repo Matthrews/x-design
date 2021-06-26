@@ -257,7 +257,6 @@ const Modal: any = ({
       </div>
     </div>
   );
-
   return show ? ReactDOM.createPortal(modal, container) : null;
 };
 
