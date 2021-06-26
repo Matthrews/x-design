@@ -20,6 +20,9 @@ const LOCALE_TEXTS = {
 };
 
 const OMITS = ['className', 'children', 'prefix', 'prefixCls', 'style'];
+// TODO
+// 问题1: 有时候md文档中API组件未调用
+// 问题2: 不识别default
 
 export default ({ identifier, export: expt }: IApiComponentProps) => {
   const data = useApiData(identifier);

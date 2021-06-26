@@ -1,7 +1,3 @@
-/**
- * desc: 外部定时更新
- */
-
 import React, {
   useCallback,
   useEffect,
@@ -60,7 +56,7 @@ const MaskDemo = () => {
 
   return (
     <div>
-      <Button onClick={() => setVisible(true)}>打开Mask后10s自动关闭</Button>
+      <Button onClick={() => setVisible(true)}>打开Mask后10秒关闭</Button>
       <Mask
         visible={visible}
         motionName="x-mask-fade"

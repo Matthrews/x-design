@@ -1,7 +1,3 @@
-/**
- * desc: 自定义节点挂载位置
- */
-
 import React, { useCallback, useRef, useState } from 'react';
 import { Modal, Button } from '@Matthrews/x-design';
 
@@ -20,7 +16,7 @@ const ModalDemo = () => {
 
   return (
     <div>
-      <Button onClick={handleClick}>自定义节点挂载位置</Button>
+      <Button onClick={handleClick}>自定义挂载位置</Button>
       <div
         style={{ backgroundColor: 'red', height: 22, display: 'inline-block' }}
         ref={divRef}
@@ -28,7 +24,7 @@ const ModalDemo = () => {
         挂载到这里
       </div>
       <Modal
-        title="自定义节点挂载位置"
+        title="自定义挂载位置"
         visible={visible}
         onClose={handleClose}
         onOk={handleClose}

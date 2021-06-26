@@ -1,7 +1,3 @@
-/**
- * desc: 定时自动关闭Modal
- */
-
 import React, { useCallback, useState } from 'react';
 import { Modal, Button } from '@Matthrews/x-design';
 

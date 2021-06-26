@@ -1,6 +1,3 @@
-/**
- * desc: 各种类型的信息提示，提供一个按钮用于关闭。
- */
 import React from 'react';
 import { Modal, Button } from '@Matthrews/x-design';
 

@@ -1,6 +1,3 @@
-/**
- * desc: 自定义Modal页脚
- */
 import { Modal, Button } from '@Matthrews/x-design';
 import React from 'react';
 

@@ -1,7 +1,3 @@
-/**
- * desc: 基本Mask。
- */
-
 import React, { useCallback, useState } from 'react';
 import { Mask, Button } from '@Matthrews/x-design';
 import './style.less';

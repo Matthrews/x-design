@@ -1,121 +1,13 @@
-import React, {
-  useEffect,
-  useState,
-  useMemo,
-  useRef,
-  CSSProperties,
-} from 'react';
+import React, { useEffect, useState, useMemo, useRef } from 'react';
 import classNames from 'classnames';
 import ReactDOM from 'react-dom';
-import { default as Button } from '@/Button';
-import { default as Mask } from '@/Mask';
 import { getPrefixCls, getParent as getContainerDom } from '@/_util';
 import { FocusTrap } from './FocusTrap';
 import { modalManager, useModalManager } from './util/modalManager';
-
-interface ConfirmProps {
-  /**
-   * 提示类型
-   */
-  type?: 'info' | 'success' | 'confirm' | 'warn' | 'warning' | 'error';
-  /**
-   * 提示标题
-   */
-  title?: string;
-  /**
-   * 提示内容
-   */
-  content?: React.ReactNode;
-}
-
-interface FooterProps {
-  /**
-   * 自定义页脚
-   */
-  footer?: React.ReactNode;
-  /**
-   * 确定文案
-   */
-  okText?: React.ReactNode;
-  /**
-   * 取消文案
-   */
-  cancelText?: React.ReactNode;
-  /**
-   * 异步确认回调
-   */
-  confirmLoading?: boolean;
-  /**
-   * 确定回调
-   */
-  onOk?: (envent?: any) => void;
-  /**
-   * 取消回调
-   */
-  onCancel?: (envent?: any) => void;
-}
-
-interface CLoseProps {
-  /**
-   * 是否可以关闭
-   */
-  closable?: boolean;
-  /**
-   * 自定义关闭 icon
-   */
-  icon?: string; // TODO
-  /**
-   * 关闭回调
-   */
-  onClose?: () => void;
-}
-
-interface StyleProps {
-  /**
-   * 包裹样式
-   */
-  wrapperStyle?: CSSProperties;
-  /**
-   * header样式
-   */
-  headerStyle?: CSSProperties;
-  /**
-   * body样式
-   */
-  bodyStyle?: CSSProperties;
-  /**
-   * footer样式
-   */
-  footerStyle?: CSSProperties;
-}
-
-export interface ModalProps
-  extends ConfirmProps,
-    FooterProps,
-    CLoseProps,
-    StyleProps {
-  /**
-   * 是否可见
-   */
-  visible: boolean;
-  /**
-   * 挂载DOM节点
-   */
-  getContainer?: () => HTMLElement | HTMLElement | string;
-  /**
-   * 前缀
-   */
-  prefixCls?: string;
-  /**
-   * className
-   */
-  className?: string;
-  /**
-   * 子结点
-   */
-  children?: React.ReactNode;
-  okCancel?: boolean;
-}
+import { default as Button } from '@/Button';
+import { default as Mask } from '@/Mask';
+import { ModalProps } from './typings';
+import './style.less';
 
 const Modal: any = ({
   prefixCls: customizePrefixCls,
@@ -147,13 +39,13 @@ const Modal: any = ({
     setShow(visible);
   }, [visible]);
 
-  const handleCloseModal = () => {
+  const handleCloseModal = (e?: React.SyntheticEvent) => {
     setShow(false);
     if (typeof onClose === 'function') {
-      onClose();
+      onClose(e);
     } else {
       if (typeof onCancel === 'function') {
-        onCancel();
+        onCancel(e);
       }
     }
   };

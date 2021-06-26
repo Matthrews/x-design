@@ -1,6 +1,3 @@
-/**
- * desc: 多个内嵌Modal
- */
 import React from 'react';
 import { Modal, Button } from '@Matthrews/x-design';
 

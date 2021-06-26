@@ -1,7 +1,3 @@
-/**
- * desc: 全屏Modal
- */
-
 import React, { useCallback, useState } from 'react';
 import { Modal, Button } from '@Matthrews/x-design';
 

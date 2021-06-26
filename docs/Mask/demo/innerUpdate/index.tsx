@@ -1,7 +1,3 @@
-/**
- * desc: 使用Hook API处理定时任务
- */
-
 import React, { useState } from 'react';
 import { Mask, Button } from '@Matthrews/x-design';
 import './style.less';
@@ -16,7 +12,7 @@ const MaskDemo = () => {
 
   return (
     <div>
-      <Button onClick={() => setVisible(true)}>打开Mask后10s自动关闭</Button>
+      <Button onClick={() => setVisible(true)}>打开Mask后10秒关闭</Button>
       <h2>{`计时结束了吗？${over}`}</h2>
       <Mask
         visible={visible}

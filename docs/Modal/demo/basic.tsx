@@ -1,7 +1,3 @@
-/**
- * desc: 基本对话框。
- */
-
 import React, { useCallback, useState } from 'react';
 import { Modal, Button } from '@Matthrews/x-design';
 
