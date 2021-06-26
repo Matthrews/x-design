@@ -11,7 +11,7 @@ import { default as Button } from '@/Button';
 import { default as Mask } from '@/Mask';
 import { getPrefixCls, getParent as getContainerDom } from '@/_util';
 import { FocusTrap } from './FocusTrap';
-import { modalManager, useModalManager } from './modalManager';
+import { modalManager, useModalManager } from './util/modalManager';
 
 interface ConfirmProps {
   /**

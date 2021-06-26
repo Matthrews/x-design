@@ -2,7 +2,7 @@ import { defineConfig } from 'dumi';
 
 export default defineConfig({
   title: 'x-design',
-  description: '基于React的企业级UI组件库生成器',
+  description: '基于React的企业级UI组件库',
   favicon: 'https://cdn.jsdelivr.net/gh/Matthrews/zm_cdn/images/x-design.png',
   logo: 'https://cdn.jsdelivr.net/gh/Matthrews/zm_cdn/images/x-design.png',
   outputPath: 'docs-dist',

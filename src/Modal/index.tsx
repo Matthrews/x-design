@@ -6,7 +6,7 @@ import confirm, {
   withConfirm,
   ModalStaticFunctions,
   modalGlobalConfig,
-} from './confirm';
+} from './Confirm';
 
 import OriginModal, { ModalProps } from './Modal';
 
