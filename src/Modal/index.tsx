@@ -6,13 +6,15 @@ import confirm, {
   withConfirm,
   ModalStaticFunctions,
   modalGlobalConfig,
-} from './confirm';
+} from './Confirm';
 
 import OriginModal, { ModalProps } from './Modal';
 
 import './style.less';
 
-export interface ModalFuncProps extends ModalProps {}
+export interface ModalFuncProps extends ModalProps {
+  okCancel?: boolean;
+}
 
 export const destroyFns: Array<() => void> = [];
 

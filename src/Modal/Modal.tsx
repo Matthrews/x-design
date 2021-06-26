@@ -1,6 +1,5 @@
 import React, {
   useEffect,
-  useCallback,
   useState,
   useMemo,
   useRef,
@@ -12,7 +11,7 @@ import { default as Button } from '@/Button';
 import { default as Mask } from '@/Mask';
 import { getPrefixCls, getParent as getContainerDom } from '@/_util';
 import { FocusTrap } from './FocusTrap';
-import { modalManager, useModalManager } from './modalManager';
+import { modalManager, useModalManager } from './util/modalManager';
 
 interface ConfirmProps {
   /**
@@ -115,9 +114,10 @@ export interface ModalProps
    * 子结点
    */
   children?: React.ReactNode;
+  okCancel?: boolean;
 }
 
-const Modal = ({
+const Modal: any = ({
   prefixCls: customizePrefixCls,
   className,
   title,
@@ -186,7 +186,6 @@ const Modal = ({
     if (event.key !== 'Escape' || !modalManager.isTopModal(modalRef)) {
       return;
     }
-    console.log('event', event.key);
     handleCancel();
   };
 
@@ -258,8 +257,7 @@ const Modal = ({
       </div>
     </div>
   );
-
-  return show && ReactDOM.createPortal(modal, container);
+  return show ? ReactDOM.createPortal(modal, container) : null;
 };
 
 export default Modal;

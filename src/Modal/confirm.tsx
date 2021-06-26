@@ -172,10 +172,5 @@ export function modalGlobalConfig({
 }: {
   rootPrefixCls: string;
 }) {
-  //   devWarning(
-  //     false,
-  //     'Modal',
-  //     'Modal.config is deprecated. Please use ConfigProvider.config instead.',
-  //   );
   defaultRootPrefixCls = rootPrefixCls;
 }
