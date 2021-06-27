@@ -20,9 +20,13 @@ const LOCALE_TEXTS = {
 };
 
 const OMITS = ['className', 'children', 'prefix', 'prefixCls', 'style'];
-// TODO
+// Note
 // 问题1: 有时候md文档中API组件未调用
 // 问题2: 不识别default
+
+// 问题2解决：
+// https://github.com/umijs/dumi/issues/513
+// https://github.com/styleguidist/react-docgen-typescript/issues/356
 
 export default ({ identifier, export: expt }: IApiComponentProps) => {
   const data = useApiData(identifier);

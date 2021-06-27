@@ -3,6 +3,9 @@
 Demo:
 
 ```tsx
+/**
+ * debug: true
+ */
 import React from 'react';
 import { Cat } from 'react-kawaii';
 

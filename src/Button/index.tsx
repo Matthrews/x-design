@@ -8,6 +8,7 @@ import './style.less';
 export interface ButtonProps {
   /**
    * 按钮类型
+   * @default primary
    */
   type?: 'primary' | 'dashed' | 'link' | 'text' | 'default';
   /**
