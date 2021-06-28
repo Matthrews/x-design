@@ -1,14 +1,7 @@
-import { getPrefixCls } from '@/_util';
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import Content from './Content';
 import Modal, { ModalFuncProps, destroyFns } from './index';
-
-let defaultRootPrefixCls = '';
-
-function getRootPrefixCls() {
-  return defaultRootPrefixCls;
-}
 
 type ConfigUpdate =
   | ModalFuncProps
@@ -19,17 +12,13 @@ export type ModalFunc = (props: ModalFuncProps) => {
   update: (configUpdate: ConfigUpdate) => void;
 };
 
-export type ModalStaticFunctions = Record<
-  NonNullable<ModalFuncProps['type']>,
-  ModalFunc
->;
+export type ModalStaticFunctions = Record<ModalFuncProps['type'], ModalFunc>;
 
-export default function confirm(config: ModalFuncProps) {
+export default (config: ModalFuncProps) => {
   console.log('confirm', config);
 
   const div = document.createElement('div');
   document.body.appendChild(div);
-  // eslint-disable-next-line @typescript-eslint/no-use-before-define
   let currentConfig = { ...config, close, visible: true } as any;
 
   function destroy(...args: any[]) {
@@ -39,13 +28,8 @@ export default function confirm(config: ModalFuncProps) {
     if (unmountResult && div.parentNode) {
       div.parentNode.removeChild(div);
     }
-    const triggerCancel = args.some((param) => param && param.triggerCancel);
-    if (config.onCancel && triggerCancel) {
-      config.onCancel(...args);
-    }
     for (let i = 0; i < destroyFns.length; i++) {
       const fn = destroyFns[i];
-      // eslint-disable-next-line @typescript-eslint/no-use-before-define
       if (fn === close) {
         destroyFns.splice(i, 1);
         break;
@@ -53,7 +37,7 @@ export default function confirm(config: ModalFuncProps) {
     }
   }
 
-  function render({
+  function mount({
     okText,
     cancelText,
     prefixCls: customizePrefixCls,
@@ -65,20 +49,8 @@ export default function confirm(config: ModalFuncProps) {
      * Sync render blocks React event. Let's make this async.
      */
     setTimeout(() => {
-      // because Modal.config  set rootPrefixCls, which is different from other components
-      const rootPrefixCls = getPrefixCls(undefined, getRootPrefixCls());
-      const prefixCls = customizePrefixCls || `${rootPrefixCls}-modal`;
-
-      console.log('render', props);
-
       ReactDOM.render(
-        <Content
-          {...props}
-          prefixCls={prefixCls}
-          rootPrefixCls={rootPrefixCls}
-          okText={okText}
-          cancelText={cancelText}
-        />,
+        <Content {...props} okText={okText} cancelText={cancelText} />,
         div,
       );
     });
@@ -97,22 +69,19 @@ export default function confirm(config: ModalFuncProps) {
     };
     console.log('close', currentConfig);
 
-    render(currentConfig);
+    mount(currentConfig);
   }
 
   function update(configUpdate: ConfigUpdate) {
     if (typeof configUpdate === 'function') {
       currentConfig = configUpdate(currentConfig);
     } else {
-      currentConfig = {
-        ...currentConfig,
-        ...configUpdate,
-      };
+      currentConfig = { ...currentConfig, ...configUpdate };
     }
-    render(currentConfig);
+    mount(currentConfig);
   }
 
-  render(currentConfig);
+  mount(currentConfig);
 
   destroyFns.push(close);
 
@@ -120,11 +89,11 @@ export default function confirm(config: ModalFuncProps) {
     destroy: close,
     update,
   };
-}
+};
 
 export function withWarn(props: ModalFuncProps): ModalFuncProps {
   return {
-    // icon: <ExclamationCircleOutlined />,
+    icon: '<Icon />',
     okCancel: false,
     ...props,
     type: 'warning',
@@ -133,7 +102,7 @@ export function withWarn(props: ModalFuncProps): ModalFuncProps {
 
 export function withInfo(props: ModalFuncProps): ModalFuncProps {
   return {
-    // icon: <InfoCircleOutlined />,
+    icon: '<Icon />',
     okCancel: false,
     ...props,
     type: 'info',
@@ -142,7 +111,7 @@ export function withInfo(props: ModalFuncProps): ModalFuncProps {
 
 export function withSuccess(props: ModalFuncProps): ModalFuncProps {
   return {
-    // icon: <CheckCircleOutlined />,
+    icon: '<Icon />',
     okCancel: false,
     ...props,
     type: 'success',
@@ -151,7 +120,7 @@ export function withSuccess(props: ModalFuncProps): ModalFuncProps {
 
 export function withError(props: ModalFuncProps): ModalFuncProps {
   return {
-    // icon: <CloseCircleOutlined />,
+    icon: '<Icon />',
     okCancel: false,
     ...props,
     type: 'error',
@@ -160,17 +129,9 @@ export function withError(props: ModalFuncProps): ModalFuncProps {
 
 export function withConfirm(props: ModalFuncProps): ModalFuncProps {
   return {
-    // icon: <ExclamationCircleOutlined />,
+    icon: '<Icon />',
     okCancel: true,
     ...props,
     type: 'confirm',
   };
-}
-
-export function modalGlobalConfig({
-  rootPrefixCls,
-}: {
-  rootPrefixCls: string;
-}) {
-  defaultRootPrefixCls = rootPrefixCls;
 }

@@ -2,7 +2,6 @@
 
 @prefix: ~'@{root-prefix}-modal';
 
-
 .@{prefix} {
   position: fixed;
   top: 0;
@@ -33,6 +32,10 @@
     z-index: 10001;
   }
 
+  &-confirm-content {
+    padding: 24px 24px 12px;
+  }
+
   &-header {
     background: #fff;
     border-bottom: 1px solid #f0f0f0;
@@ -40,6 +43,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  &-confirm-header {
+    background: #fff;
+    display: flex;
   }
 
   &-body {
@@ -50,8 +58,23 @@
     flex-grow: 1;
   }
 
+  &-confirm-body {
+    word-wrap: break-word;
+    font-size: 14px;
+    line-height: 22px;
+    padding: 16px 0;
+    flex-grow: 1;
+  }
+
   &-footer {
-    border-top: 1px solid #f0f0f0;
+    text-align: right;
+
+    button + button {
+      margin-left: 8px;
+    }
+  }
+
+  &-confirm-footer {
     padding: 10px 16px;
     text-align: right;
 

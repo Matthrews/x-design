@@ -5,10 +5,10 @@ import confirm, {
   withError,
   withConfirm,
   ModalStaticFunctions,
-  modalGlobalConfig,
 } from './Confirm';
 
-import OriginModal, { ModalProps } from './Modal';
+import OriginModal from './Modal';
+import { ModalProps } from './typings';
 
 import './style.less';
 
@@ -21,7 +21,6 @@ export const destroyFns: Array<() => void> = [];
 type ModalType = typeof OriginModal &
   ModalStaticFunctions & {
     destroyAll: () => void;
-    config: typeof modalGlobalConfig;
   };
 
 const Modal = OriginModal as ModalType;
@@ -43,6 +42,10 @@ Modal.warn = function modalWarn(props: ModalFuncProps) {
   return confirm(withWarn(props));
 };
 
+Modal.warning = function modalWarn(props: ModalFuncProps) {
+  return confirm(withWarn(props));
+};
+
 Modal.confirm = function confirmFn(props: ModalFuncProps) {
   return confirm(withConfirm(props));
 };
@@ -57,7 +60,5 @@ Modal.destroyAll = function destroyAllFn() {
     }
   }
 };
-
-Modal.config = modalGlobalConfig;
 
 export default Modal;

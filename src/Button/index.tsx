@@ -8,11 +8,12 @@ import './style.less';
 export interface ButtonProps {
   /**
    * 按钮类型
-   * @default primary
+   * @default default
    */
   type?: 'primary' | 'dashed' | 'link' | 'text' | 'default';
   /**
    * 加载中...
+   * @default false
    */
   loading?: boolean | number | { delay?: number };
   /**

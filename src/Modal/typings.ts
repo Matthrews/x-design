@@ -13,6 +13,7 @@ import { CSSProperties, ReactNode } from "react";
      * 提示内容
      */
     content?: ReactNode;
+    close?: () => void;
   }
   
  interface FooterProps {
