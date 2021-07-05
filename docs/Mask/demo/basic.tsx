@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { Mask, Button } from '@Matthrews/x-design';
 import './style.less';
 
 const MaskDemo = () => {
   const [visible, setVisible] = useState<Boolean>(false);
-  const [over, setOver] = useState(false);
 
   const handleMaskClick = () => {
     setVisible(false);
@@ -12,19 +17,11 @@ const MaskDemo = () => {
 
   return (
     <div>
-      <Button onClick={() => setVisible(true)}>打开Mask后10秒关闭</Button>
-      <h2>{`计时结束了吗？${over}`}</h2>
+      <Button onClick={() => setVisible(true)}>打开Mask</Button>
       <Mask
         visible={visible}
         motionName="x-mask-fade"
         maskClick={handleMaskClick}
-        config={{
-          closeAfter: 10000,
-          closeCallback: (res: any) => {
-            setOver(res);
-            console.log('是否结束了', res);
-          },
-        }}
       />
     </div>
   );

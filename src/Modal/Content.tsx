@@ -22,7 +22,6 @@ export default (props: ModalProps) => {
     onClose,
     onOk,
     onCancel,
-    okCancel,
   } = props;
   console.log('props', props);
 

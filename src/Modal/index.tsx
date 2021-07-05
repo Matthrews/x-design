@@ -12,10 +12,6 @@ import { ModalProps } from './typings';
 
 import './style.less';
 
-export interface ModalFuncProps extends ModalProps {
-  okCancel?: boolean;
-}
-
 export const destroyFns: Array<() => void> = [];
 
 type ModalType = typeof OriginModal &
@@ -25,28 +21,28 @@ type ModalType = typeof OriginModal &
 
 const Modal = OriginModal as ModalType;
 
-Modal.info = function infoFn(props: ModalFuncProps) {
+Modal.info = function infoFn(props: ModalProps) {
   console.log('infoFn', props);
   return confirm(withInfo(props));
 };
 
-Modal.success = function successFn(props: ModalFuncProps) {
+Modal.success = function successFn(props: ModalProps) {
   return confirm(withSuccess(props));
 };
 
-Modal.error = function errorFn(props: ModalFuncProps) {
+Modal.error = function errorFn(props: ModalProps) {
   return confirm(withError(props));
 };
 
-Modal.warn = function modalWarn(props: ModalFuncProps) {
+Modal.warn = function modalWarn(props: ModalProps) {
   return confirm(withWarn(props));
 };
 
-Modal.warning = function modalWarn(props: ModalFuncProps) {
+Modal.warning = function modalWarn(props: ModalProps) {
   return confirm(withWarn(props));
 };
 
-Modal.confirm = function confirmFn(props: ModalFuncProps) {
+Modal.confirm = function confirmFn(props: ModalProps) {
   return confirm(withConfirm(props));
 };
 

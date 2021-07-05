@@ -94,7 +94,6 @@ export default (config: ModalFuncProps) => {
 export function withWarn(props: ModalFuncProps): ModalFuncProps {
   return {
     icon: '<Icon />',
-    okCancel: false,
     ...props,
     type: 'warning',
   };
@@ -103,7 +102,6 @@ export function withWarn(props: ModalFuncProps): ModalFuncProps {
 export function withInfo(props: ModalFuncProps): ModalFuncProps {
   return {
     icon: '<Icon />',
-    okCancel: false,
     ...props,
     type: 'info',
   };
@@ -112,7 +110,6 @@ export function withInfo(props: ModalFuncProps): ModalFuncProps {
 export function withSuccess(props: ModalFuncProps): ModalFuncProps {
   return {
     icon: '<Icon />',
-    okCancel: false,
     ...props,
     type: 'success',
   };
@@ -121,7 +118,6 @@ export function withSuccess(props: ModalFuncProps): ModalFuncProps {
 export function withError(props: ModalFuncProps): ModalFuncProps {
   return {
     icon: '<Icon />',
-    okCancel: false,
     ...props,
     type: 'error',
   };
@@ -130,7 +126,6 @@ export function withError(props: ModalFuncProps): ModalFuncProps {
 export function withConfirm(props: ModalFuncProps): ModalFuncProps {
   return {
     icon: '<Icon />',
-    okCancel: true,
     ...props,
     type: 'confirm',
   };

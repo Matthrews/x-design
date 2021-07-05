@@ -2,7 +2,6 @@ import React, { useEffect, useState, useMemo, useRef } from 'react';
 import classNames from 'classnames';
 import ReactDOM from 'react-dom';
 import { getPrefixCls, getParent as getContainerDom } from '@/_util';
-import { FocusTrap } from './FocusTrap';
 import { modalManager, useModalManager } from './util/modalManager';
 import { default as Button } from '@/Button';
 import { default as Mask } from '@/Mask';
@@ -22,7 +21,7 @@ const Modal: any = ({
   getContainer,
   onClose,
   onOk,
-  onCancel,
+  close,
   wrapperStyle,
   headerStyle,
   bodyStyle,
@@ -44,8 +43,8 @@ const Modal: any = ({
     if (typeof onClose === 'function') {
       onClose(e);
     } else {
-      if (typeof onCancel === 'function') {
-        onCancel(e);
+      if (typeof close === 'function') {
+        close();
       }
     }
   };
@@ -56,11 +55,11 @@ const Modal: any = ({
 
   const handleCancel = (e?: React.SyntheticEvent) => {
     setShow(false);
-    onCancel?.(e);
+    close?.(e);
   };
 
   useEffect(() => {
-    if (show === true && confirmLoading === false) {
+    if (show && !confirmLoading) {
       setShow(false);
     }
   }, [confirmLoading]);
@@ -71,23 +70,6 @@ const Modal: any = ({
     } else {
       document.body.classList.remove('x-scrolling-effect');
     }
-  }, [show]);
-
-  const handleKeydown = (event: KeyboardEvent) => {
-    // Only the last modal need to be escaped when pressing the esc key
-    if (event.key !== 'Escape' || !modalManager.isTopModal(modalRef)) {
-      return;
-    }
-    handleCancel();
-  };
-
-  useEffect(() => {
-    if (show) {
-      document.addEventListener('keydown', handleKeydown);
-    }
-    return () => {
-      document.removeEventListener('keydown', handleKeydown);
-    };
   }, [show]);
 
   const titleClose = useMemo(() => {
@@ -144,7 +126,6 @@ const Modal: any = ({
         ref={modalRef}
         className={classNames(`${prefixCls}-wrapper`)}
       >
-        <FocusTrap container={modalRef} initialFocusRef={undefined} />
         {modalContent}
       </div>
     </div>
