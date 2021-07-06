@@ -21,7 +21,6 @@ const Modal: any = ({
   getContainer,
   onClose,
   onOk,
-  close,
   wrapperStyle,
   headerStyle,
   bodyStyle,
@@ -45,11 +44,10 @@ const Modal: any = ({
   }, []);
 
   const handleCloseModal = (e?: React.SyntheticEvent) => {
-    setShow(false);
     if (onClose) {
       onClose(e);
-    } else if (close) {
-      close();
+    } else {
+      setShow(false);
     }
   };
 
@@ -58,8 +56,11 @@ const Modal: any = ({
   };
 
   const handleCancel = (e?: React.SyntheticEvent) => {
-    setShow(false);
-    close?.();
+    if (onClose) {
+      onClose(e);
+    } else {
+      setShow(false);
+    }
   };
 
   useEffect(() => {
@@ -131,6 +132,8 @@ const Modal: any = ({
       </div>
     </>
   );
+  console.log('render', show, visible);
+
   return show ? ReactDOM.createPortal(modal, container) : null;
 };
 
