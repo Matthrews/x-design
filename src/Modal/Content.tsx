@@ -27,31 +27,11 @@ export default (props: ModalProps) => {
 
   const prefixCls = getPrefixCls('modal', customizePrefixCls);
   const handleCloseModal = () => {
-    // if (typeof onClose === 'function') {
-    //   onClose();
-    // } else {
-    //   if (typeof onCancel === 'function') {
-    //     onCancel();
-    //   }
-    // }
     close();
   };
 
-  // var gen = function* (func, callback) {
-  //   var f1 = yield promisify(onOk);
-  //   var f2 = yield promisify(close);
-  //   console.log(f1?.toString());
-  //   console.log(f2?.toString());
-  // };
-
-  // const promisify = (func) => {
-  //   return new Promise((resolve) => {
-  //     resolve(func());
-  //   });
-  // };
-
   useEffect(() => {
-    if (visible === false && typeof onClose === 'function') {
+    if (!visible) {
       onClose?.();
     }
   }, [visible]);
@@ -59,19 +39,18 @@ export default (props: ModalProps) => {
   const handleOk = (e?: React.SyntheticEvent) => {
     onOk?.(e);
     close?.();
-    // var g = gen(e);
-
-    // g.next().value.then(function (data) {
-    //   g.next(data).value.then(function (data) {
-    //     g.next(data);
-    //   });
-    // });
   };
 
   const handleCancel = (e?: React.SyntheticEvent) => {
     onCancel?.(e);
     close?.();
   };
+
+  useEffect(() => {
+    return () => {
+      document.body.classList.remove('x-scrolling-effect');
+    };
+  }, []);
 
   useEffect(() => {
     if (visible) {
@@ -107,7 +86,12 @@ export default (props: ModalProps) => {
   }, [type]);
 
   const modalContent = (
-    <div className={classNames(`${prefixCls}-content`, `${prefixCls}-confirm-content`)}>
+    <div
+      className={classNames(
+        `${prefixCls}-content`,
+        `${prefixCls}-confirm-content`,
+      )}
+    >
       <div className={classNames(`${prefixCls}-confirm-header`)}>
         {icon}
         <div className={classNames(`${prefixCls}-title`)}>{title}</div>
@@ -117,7 +101,7 @@ export default (props: ModalProps) => {
         {type ? content : children}
       </div>
       <div className={classNames(`${prefixCls}-confirm-footer`)}>
-        {customFooter ?? footer}
+        {customFooter !== undefined ? customFooter : footer}
       </div>
     </div>
   );

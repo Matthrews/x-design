@@ -53,5 +53,4 @@ function showDeleteConfirm() {
   });
 }
 
-
 export default () => <Button onClick={showPromiseConfirm}>Confirm</Button>;

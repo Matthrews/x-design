@@ -12,7 +12,7 @@
 
 <code src="./demo/footer.tsx">
 
-## 定时关闭
+<!-- ## 定时关闭
 
 <code src="./demo/count.tsx">
 
@@ -22,7 +22,7 @@
 
 ## 信息提示
 
-<code src="./demo/notification.tsx">
+<code src="./demo/notification.tsx"> -->
 
 ## 自定义挂载位置
 
@@ -36,7 +36,7 @@
 
 <code src="./demo/fullScreen.tsx">
 
-## API
+<!-- ## API
 
 | 属性名       | 描述          | 类型                                                   | 默认值                    |
 | ------------ | ------------- | ------------------------------------------------------ | ------------------------- |
@@ -56,7 +56,7 @@
 
 | 属性名         | 描述             | 类型                               | 默认值 |
 | -------------- | ---------------- | ---------------------------------- | ------ |
-| footer         | 自定义页脚       | <code>React.ReactNode<code>        | --     |
+| footer         | 自定义页脚       | <code>React.ReactNode \| null<code>        | --     |
 | okText         | 确定文案         | <code>React.ReactNode<code>        | --     |
 | cancelText     | 取消文案         | <code>React.ReactNode<code>        | --     |
 | confirmLoading | 异步确认 Loading | <code>boolean<code>                | --     |
@@ -78,4 +78,4 @@
 | wrapperStyle | 包裹样式    | <code>React.CSSProperties<code> | --     |
 | headerStyle  | header 样式 | <code>React.CSSProperties<code> | --     |
 | bodyStyle    | body 样式   | <code>React.CSSProperties<code> | --     |
-| footerStyle  | footer 样式 | <code>React.CSSProperties<code> | --     |
+| footerStyle  | footer 样式 | <code>React.CSSProperties<code> | --     | -->

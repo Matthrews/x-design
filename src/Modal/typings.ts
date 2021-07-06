@@ -19,7 +19,7 @@ interface FooterProps {
   /**
    * 自定义页脚
    */
-  footer?: ReactNode;
+  footer?: ReactNode | null;
   /**
    * 确定文案
    */
@@ -63,7 +63,7 @@ interface CloseProps {
 
 interface StyleProps {
   /**
-   * 包裹样式
+   * wrapper样式
    */
   wrapperStyle?: CSSProperties;
   /**
@@ -106,3 +106,5 @@ export interface ModalProps
    */
   children?: ReactNode;
 }
+
+export const destroyFns: Array<() => void> = [];

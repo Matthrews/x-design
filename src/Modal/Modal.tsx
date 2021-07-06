@@ -38,14 +38,18 @@ const Modal: any = ({
     setShow(visible);
   }, [visible]);
 
+  useEffect(() => {
+    return () => {
+      document.body.classList.remove('x-scrolling-effect');
+    };
+  }, []);
+
   const handleCloseModal = (e?: React.SyntheticEvent) => {
     setShow(false);
-    if (typeof onClose === 'function') {
+    if (onClose) {
       onClose(e);
-    } else {
-      if (typeof close === 'function') {
-        close();
-      }
+    } else if (close) {
+      close();
     }
   };
 
@@ -55,7 +59,7 @@ const Modal: any = ({
 
   const handleCancel = (e?: React.SyntheticEvent) => {
     setShow(false);
-    close?.(e);
+    close?.();
   };
 
   useEffect(() => {
@@ -97,38 +101,35 @@ const Modal: any = ({
     );
   }, [type]);
 
-  const modalContent = (
-    <div className={classNames(`${prefixCls}-content`)} style={wrapperStyle}>
-      <div className={classNames(`${prefixCls}-header`)} style={headerStyle}>
-        <div className={classNames(`${prefixCls}-title`)}>{title}</div>
-        {titleClose}
-      </div>
-      <div className={classNames(`${prefixCls}-body`)} style={bodyStyle}>
-        {type ? content : children}
-      </div>
-      <div className={classNames(`${prefixCls}-footer`)} style={footerStyle}>
-        {customFooter ?? footer}
-      </div>
-    </div>
-  );
-
   const container = getContainerDom(getContainer);
   const modal = (
-    <div className={classNames(prefixCls, className)}>
-      <Mask
-        visible={show}
-        maskClick={() => {}}
-        onClose={() => {}}
-        style={{ backgroundColor: 'inherit' }}
-      />
-      <div
-        role="dialog"
-        ref={modalRef}
-        className={classNames(`${prefixCls}-wrapper`)}
-      >
-        {modalContent}
+    <>
+      <Mask visible={show} maskClick={() => {}} onClose={() => {}} />
+      <div className={classNames(prefixCls, className)}>
+        <div
+          ref={modalRef}
+          className={classNames(`${prefixCls}-wrapper`)}
+          style={wrapperStyle}
+        >
+          <div
+            className={classNames(`${prefixCls}-header`)}
+            style={headerStyle}
+          >
+            <div className={classNames(`${prefixCls}-title`)}>{title}</div>
+            {titleClose}
+          </div>
+          <div className={classNames(`${prefixCls}-body`)} style={bodyStyle}>
+            {type ? content : children}
+          </div>
+          <div
+            className={classNames(`${prefixCls}-footer`)}
+            style={footerStyle}
+          >
+            {customFooter !== undefined ? customFooter : footer}
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
   return show ? ReactDOM.createPortal(modal, container) : null;
 };

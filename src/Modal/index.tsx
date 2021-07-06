@@ -8,11 +8,9 @@ import confirm, {
 } from './Confirm';
 
 import OriginModal from './Modal';
-import { ModalProps } from './typings';
+import { destroyFns, ModalProps } from './typings';
 
 import './style.less';
-
-export const destroyFns: Array<() => void> = [];
 
 type ModalType = typeof OriginModal &
   ModalStaticFunctions & {
@@ -22,7 +20,6 @@ type ModalType = typeof OriginModal &
 const Modal = OriginModal as ModalType;
 
 Modal.info = function infoFn(props: ModalProps) {
-  console.log('infoFn', props);
   return confirm(withInfo(props));
 };
 
@@ -47,8 +44,6 @@ Modal.confirm = function confirmFn(props: ModalProps) {
 };
 
 Modal.destroyAll = function destroyAllFn() {
-  console.log('destroyAll', destroyFns);
-
   while (destroyFns.length) {
     const close = destroyFns.pop();
     if (close) {

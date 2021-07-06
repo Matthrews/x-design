@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Content from './Content';
-import Modal, { ModalFuncProps, destroyFns } from './index';
+import { ModalProps as ModalFuncProps, destroyFns } from './typings';
 
 type ConfigUpdate =
   | ModalFuncProps
