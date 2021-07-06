@@ -43,6 +43,7 @@
     padding: 24px;
     flex-grow: 1;
     text-align: initial;
+    overflow-y: auto;
   }
 
   &-confirm-body {
@@ -52,6 +53,7 @@
     padding: 16px 0;
     flex-grow: 1;
     text-align: initial;
+    overflow-y: auto;
   }
 
   &-footer {
@@ -92,11 +94,7 @@
   z-index: @modalZIndex;
   text-align: center;
   transform: translate(-50%, -50%);
-}
-
-.x-scrolling-effect {
-  width: calc(100% - 17px);
-  overflow: hidden;
+  max-height: 80%;
 }
 
 .x-modal-close-x {
